@@ -23,6 +23,8 @@ services:
       - "${NGINX_HOST_HTTPS_PORT:-443}:443"
     environment:
       - BLOG_DOMAIN=${BLOG_DOMAIN}
+      - BLOG_API_DOMAIN=${BLOG_API_DOMAIN}
+      - BLOG_ADMIN_DOMAIN=${BLOG_ADMIN_DOMAIN}
       - NGINX_HOST_HTTP_PORT=${NGINX_HOST_HTTP_PORT:-80}
       - NGINX_HOST_HTTPS_PORT=${NGINX_HOST_HTTPS_PORT:-443}
     networks:
@@ -45,6 +47,8 @@ services:
       - ${SOURCE_CODE_PATH}:/var/dev
     environment:
       - BLOG_DOMAIN=${BLOG_DOMAIN}
+      - BLOG_API_DOMAIN=${BLOG_API_DOMAIN}
+      - BLOG_ADMIN_DOMAIN=${BLOG_ADMIN_DOMAIN}
 
   ## DATABASE SERVICES
   postgres:

@@ -1,7 +1,7 @@
 server {
     listen ${NGINX_HOST_HTTP_PORT};
 
-    server_name ${BLOG_DOMAIN};
+    server_name ${BLOG_ADMIN_DOMAIN};
     root /var/dev/blog/public;
     index index.php index.html index.htm;
 
@@ -9,8 +9,8 @@ server {
          try_files $uri $uri/ /index.php$is_args$args;
     }
 
-    access_log /var/log/nginx/blog.cslant.com-access.log;
-    error_log /var/log/nginx/blog.cslant.com-error.log debug;
+    access_log /var/log/nginx/${BLOG_ADMIN_DOMAIN}-access.log;
+    error_log /var/log/nginx/${BLOG_ADMIN_DOMAIN}-error.log debug;
 
     location ~ \.php$ {
         try_files $uri /index.php =404;
