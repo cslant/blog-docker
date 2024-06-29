@@ -59,6 +59,11 @@ services:
         - TZ=${TZ}
     networks:
       - backend
+    healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+        interval: 10s
+        timeout: 5s
+        retries: 5
     volumes:
       - postgres:/var/lib/postgresql/data
       - ./postgres/entry.d:/docker-entrypoint-initdb.d
