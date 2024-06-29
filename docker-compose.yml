@@ -2,6 +2,10 @@ networks:
   backend:
     driver: bridge
 
+volumes:
+    postgres:
+      driver: local
+
 services:
   ## WEB SERVICE
   nginx:
@@ -41,3 +45,22 @@ services:
       - ${SOURCE_CODE_PATH}:/var/dev
     environment:
       - BLOG_DOMAIN=${BLOG_DOMAIN}
+
+  ## DATABASE SERVICES
+  postgres:
+    container_name: "${COMPOSE_PROJECT_NAME:-blog}-postgres"
+    build:
+      context: ./postgres
+      args:
+        - TZ=${TZ}
+    networks:
+      - backend
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      - ./postgres/entry.d:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_HOST_PORT:-5432}:5432"
