@@ -1,0 +1,6 @@
+# Postgres configuration file
+# For explanations see
+
+[postgres]
+listen_addresses = '*'
+port = 5432
