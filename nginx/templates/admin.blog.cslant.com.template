@@ -5,8 +5,15 @@ server {
     root /var/dev/blog-admin/public;
     index index.php index.html index.htm;
 
-    location / {
-         try_files $uri $uri/ /index.php$is_args$args;
+    # Serve /admin contents when accessing /
+    location ~ ^/$ {
+        rewrite ^/$ /admin/ break;
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    # Serve /admin normally
+    location /admin {
+        try_files $uri $uri/ /index.php$is_args$args;
     }
 
     access_log /var/log/nginx/${BLOG_ADMIN_DOMAIN}-access.log;
