@@ -5,14 +5,14 @@ server {
     root /var/dev/blog-admin/public;
     index index.php index.html index.htm;
 
-    # Serve /admin contents when accessing /
+    # Serve /${BLOG_ADMIN_DIR} contents when accessing /
     location ~ ^/$ {
-        rewrite ^/$ /admin/ break;
+        rewrite ^/$ /${BLOG_ADMIN_DIR}/ break;
         try_files $uri $uri/ /index.php$is_args$args;
     }
 
-    # Serve /admin normally
-    location /admin {
+    # Serve /${BLOG_ADMIN_DIR} normally
+    location /${BLOG_ADMIN_DIR} {
         try_files $uri $uri/ /index.php$is_args$args;
     }
 
