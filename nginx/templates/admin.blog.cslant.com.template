@@ -7,7 +7,7 @@ server {
 
     # Serve /${BLOG_ADMIN_DIR} contents when accessing /
     location ~ ^/$ {
-        rewrite ^/$ /${BLOG_ADMIN_DIR}/ break;
+        rewrite ^/$ /${BLOG_ADMIN_DIR}/ permanent;
         try_files $uri $uri/ /index.php$is_args$args;
     }
 
