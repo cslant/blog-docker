@@ -10570,9 +10570,3 @@ CREATE UNIQUE INDEX users_email_idx ON public.users USING btree (email);
 --
 
 CREATE UNIQUE INDEX users_username_idx ON public.users USING btree (username);
-
-
---
--- PostgreSQL database dump complete
---
-
