@@ -10,5 +10,5 @@ pg_dump -U username -h hostname database_name >> /path/to/backup.sql
 Example:
 
 ```bash
-pg_dump -U root -h localhost blog >> /docker-entrypoint-initdb.d/blog.sql
+pg_dump -U root -h localhost blog >> /docker-entrypoint-initdb.d/cslant_blog.sql
 ```
