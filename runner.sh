@@ -24,6 +24,15 @@ case "$1" in
     git_sync "$2"
     ;;
 
+  build)
+    build
+    ;;
+
+  all)
+    git_sync all
+    build
+    ;;
+
   *)
     usage
     exit 1

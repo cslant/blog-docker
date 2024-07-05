@@ -22,6 +22,11 @@ git_sync() {
       blog_fe_sync
       blog_api_package_sync
       ;;
+
+    *)
+      usage
+      exit 1
+      ;;
   esac
 
   echo '✨ Syncing blog repositories done!'
