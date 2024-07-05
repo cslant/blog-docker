@@ -1,4 +1,3 @@
-# shellcheck disable=SC2034
 CURRENT_DIR=$(pwd)
 SOURCE_DIR=$(readlink -f "$SOURCE_CODE_PATH")
 
@@ -13,7 +12,7 @@ welcome() {
   echo ''
   echo '⚡ Welcome to the blog setup script ⚡'
   echo ''
-  echo "- Current dir        : z "
+  echo "- Current dir        : $CURRENT_DIR"
   echo "- Source dir         : $SOURCE_DIR"
   echo ''
 }
@@ -25,9 +24,20 @@ usage() {
   echo 'Commands:'
   echo '  welcome         Show welcome message'
   echo '  help            Show this help message'
+  echo '  git_sync        Sync git repositories'
+  echo '  build           Build blog with Docker'
+  echo '  all             Sync git repositories and build blog'
   echo ''
+  echo 'Args for git_sync:'
+  echo '  admin           Sync blog-admin repository'
+  echo '  fe              Sync blog-fe repository'
+  echo '  api-package     Sync blog-api-package repository'
+  echo '  all             Sync all blog repositories'
   echo ''
   echo 'Example:'
   echo "  bash $0 help"
+  echo "  bash $0 git_sync admin"
+  echo "  bash $0 git_sync all"
+  echo "  bash $0 build"
   echo ''
 }
