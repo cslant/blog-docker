@@ -5,8 +5,20 @@ server {
     root /var/dev/blog-admin/public;
     index index.php index.html index.htm;
 
-    location / {
-         try_files $uri $uri/ /index.php$is_args$args;
+    # Serve /${BLOG_ADMIN_DIR} contents when accessing /
+    location ~ ^/$ {
+        rewrite ^/$ /${BLOG_ADMIN_DIR}/ permanent;
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    # exclude /_debugbar from /${BLOG_ADMIN_DIR}
+    location /_debugbar {
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    # Serve /${BLOG_ADMIN_DIR} normally
+    location /${BLOG_ADMIN_DIR} {
+        try_files $uri $uri/ /index.php$is_args$args;
     }
 
     access_log /var/log/nginx/${BLOG_ADMIN_DOMAIN}-access.log;
