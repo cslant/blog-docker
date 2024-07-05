@@ -39,5 +39,7 @@ usage() {
   echo "  bash $0 git_sync admin"
   echo "  bash $0 git_sync all"
   echo "  bash $0 build"
+  echo "  bash $0 start"
+  echo "  bash $0 all"
   echo ''
 }

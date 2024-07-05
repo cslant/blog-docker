@@ -28,9 +28,14 @@ case "$1" in
     build
     ;;
 
+  start)
+    start
+    ;;
+
   all)
     git_sync all
     build
+    start
     ;;
 
   *)
