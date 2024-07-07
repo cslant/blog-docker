@@ -4,11 +4,21 @@ This repo is to set up the runner for updating the blog.
 
 We can use this runner to update the blog for development and production.
 
+## Prerequisites
+
 First, copy the `.env.example` file to `.env` and update the values.
 
 ```bash
 envsubst < .env.example > .env
 ```
+
+if you don't have `envsubst` command, you can use the following command:
+
+```bash
+cp .env.example .env
+```
+
+## Installation
 
 In the `.env` file, update the values to match your environment.
 
@@ -17,7 +27,7 @@ In the `.env` file, update the values to match your environment.
 # ...
 
 # Path to your code folder
-SOURCE_DIR=/Users/tanhongit/CSlant/blog/source
+SOURCE_CODE_PATH=/Users/tanhongit/CSlant/blog/source
 
 GIT_SSH_URL="git@github.com:cslant"
 
@@ -32,7 +42,13 @@ BLOG_ADMIN_DIR=hello
 
 > [!IMPORTANT]
 > ## Command can't be used if wrong values are set in the `.env` file.
-> * If the `SOURCE_DIR` is wrong, the runner will not be able to find the source code. So, please make sure the `SOURCE_DIR` is correct.
+> 
+> * If the `SOURCE_CODE_PATH` is wrong, the runner will not be able to find the source code. So, please make sure the `SOURCE_CODE_PATH` is correct.
+>
+> So please get full path of the `SOURCE_CODE_PATH` with the following command:
+> ```bash
+> pwd
+> ```
 
 Then, run the following command to start the runner.
 

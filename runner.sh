@@ -33,8 +33,8 @@ case "$1" in
     ;;
 
   all)
-    git_sync all
     build
+    git_sync all
     start
     ;;
 
