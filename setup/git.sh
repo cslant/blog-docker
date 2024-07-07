@@ -1,9 +1,6 @@
 git_sync() {
   echo '📥 Syncing blog repositories...'
 
-  cd "$SOURCE_DIR" || exit
-  echo ''
-
   case "$1" in
     admin)
       blog_admin_sync
@@ -36,6 +33,7 @@ git_sync() {
 blog_admin_sync() {
   REPO_NAME='blog-admin'
 
+  cd "$SOURCE_DIR" || exit
   echo "» Syncing $REPO_NAME repository..."
 
   if [ -z "$(ls -A "$REPO_NAME")" ]; then
@@ -54,6 +52,7 @@ blog_admin_sync() {
 blog_fe_sync() {
   REPO_NAME='blog-fe'
 
+  cd "$SOURCE_DIR" || exit
   echo "» Syncing $REPO_NAME repository..."
 
   if [ -z "$(ls -A "$REPO_NAME")" ]; then
@@ -72,9 +71,8 @@ blog_fe_sync() {
 blog_api_package_sync() {
   REPO_NAME='blog-api-package'
 
-  echo "» Syncing $REPO_NAME repository..."
-
   cd "$SOURCE_DIR/blog-admin" || exit
+  echo "» Syncing $REPO_NAME repository..."
 
   if [ ! -d "packages" ]; then
     mkdir packages
