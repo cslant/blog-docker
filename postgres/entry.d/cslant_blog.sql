@@ -2496,6 +2496,13 @@ SELECT pg_catalog.setval('public.activations_id_seq', 1, false);
 
 
 --
+-- Name: admin_notifications_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
+--
+
+SELECT pg_catalog.setval('public.admin_notifications_id_seq', 1, false);
+
+
+--
 -- Name: audit_histories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
@@ -2727,13 +2734,6 @@ SELECT pg_catalog.setval('public.revisions_id_seq', 1, false);
 
 
 --
--- Name: role_users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
---
-
-SELECT pg_catalog.setval('public.role_users_id_seq', 1, false);
-
-
---
 -- Name: roles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
 --
 
@@ -2795,6 +2795,14 @@ SELECT pg_catalog.setval('public.widgets_id_seq', 1, false);
 
 ALTER TABLE ONLY public.activations
     ADD CONSTRAINT activations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: admin_notifications admin_notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.admin_notifications
+    ADD CONSTRAINT admin_notifications_pkey PRIMARY KEY (id);
 
 
 --
@@ -2891,6 +2899,14 @@ ALTER TABLE ONLY public.dashboard_widgets
 
 ALTER TABLE ONLY public.failed_jobs
     ADD CONSTRAINT failed_jobs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: failed_jobs failed_jobs_uuid_unique; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.failed_jobs
+    ADD CONSTRAINT failed_jobs_uuid_unique UNIQUE (uuid);
 
 
 --
@@ -3030,6 +3046,14 @@ ALTER TABLE ONLY public.menus
 
 
 --
+-- Name: menus menus_slug_unique; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.menus
+    ADD CONSTRAINT menus_slug_unique UNIQUE (slug);
+
+
+--
 -- Name: meta_boxes meta_boxes_pkey; Type: CONSTRAINT; Schema: public; Owner: root
 --
 
@@ -3062,11 +3086,27 @@ ALTER TABLE ONLY public.pages_translations
 
 
 --
+-- Name: password_reset_tokens password_reset_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.password_reset_tokens
+    ADD CONSTRAINT password_reset_tokens_pkey PRIMARY KEY (email);
+
+
+--
 -- Name: personal_access_tokens personal_access_tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.personal_access_tokens
     ADD CONSTRAINT personal_access_tokens_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: personal_access_tokens personal_access_tokens_token_unique; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.personal_access_tokens
+    ADD CONSTRAINT personal_access_tokens_token_unique UNIQUE (token);
 
 
 --
@@ -3122,7 +3162,7 @@ ALTER TABLE ONLY public.revisions
 --
 
 ALTER TABLE ONLY public.role_users
-    ADD CONSTRAINT role_users_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT role_users_pkey PRIMARY KEY (user_id, role_id);
 
 
 --
@@ -3131,6 +3171,22 @@ ALTER TABLE ONLY public.role_users
 
 ALTER TABLE ONLY public.roles
     ADD CONSTRAINT roles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: roles roles_slug_unique; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.roles
+    ADD CONSTRAINT roles_slug_unique UNIQUE (slug);
+
+
+--
+-- Name: settings settings_key_unique; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.settings
+    ADD CONSTRAINT settings_key_unique UNIQUE (key);
 
 
 --
@@ -3190,11 +3246,27 @@ ALTER TABLE ONLY public.user_meta
 
 
 --
+-- Name: users users_email_unique; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_email_unique UNIQUE (email);
+
+
+--
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: root
 --
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_username_unique; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_username_unique UNIQUE (username);
 
 
 --
@@ -3210,6 +3282,13 @@ ALTER TABLE ONLY public.widgets
 --
 
 CREATE INDEX activations_user_id_idx ON public.activations USING btree (user_id);
+
+
+--
+-- Name: activations_user_id_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX activations_user_id_index ON public.activations USING btree (user_id);
 
 
 --
@@ -3255,10 +3334,24 @@ CREATE INDEX dashboard_widget_settings_user_id_idx ON public.dashboard_widget_se
 
 
 --
+-- Name: dashboard_widget_settings_user_id_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX dashboard_widget_settings_user_id_index ON public.dashboard_widget_settings USING btree (user_id);
+
+
+--
 -- Name: dashboard_widget_settings_widget_id_idx; Type: INDEX; Schema: public; Owner: root
 --
 
 CREATE INDEX dashboard_widget_settings_widget_id_idx ON public.dashboard_widget_settings USING btree (widget_id);
+
+
+--
+-- Name: dashboard_widget_settings_widget_id_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX dashboard_widget_settings_widget_id_index ON public.dashboard_widget_settings USING btree (widget_id);
 
 
 --
@@ -3290,6 +3383,13 @@ CREATE INDEX jobs_queue_idx ON public.jobs USING btree (queue);
 
 
 --
+-- Name: jobs_queue_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX jobs_queue_index ON public.jobs USING btree (queue);
+
+
+--
 -- Name: language_meta_reference_id_idx; Type: INDEX; Schema: public; Owner: root
 --
 
@@ -3304,10 +3404,31 @@ CREATE INDEX media_files_folder_id_user_id_created_at_idx ON public.media_files 
 
 
 --
+-- Name: media_files_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX media_files_index ON public.media_files USING btree (folder_id, user_id, created_at);
+
+
+--
 -- Name: media_files_user_id_idx; Type: INDEX; Schema: public; Owner: root
 --
 
 CREATE INDEX media_files_user_id_idx ON public.media_files USING btree (user_id);
+
+
+--
+-- Name: media_files_user_id_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX media_files_user_id_index ON public.media_files USING btree (user_id);
+
+
+--
+-- Name: media_folders_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX media_folders_index ON public.media_folders USING btree (parent_id, user_id, created_at);
 
 
 --
@@ -3322,6 +3443,13 @@ CREATE INDEX media_folders_parent_id_user_id_created_at_idx ON public.media_fold
 --
 
 CREATE INDEX media_folders_user_id_idx ON public.media_folders USING btree (user_id);
+
+
+--
+-- Name: media_folders_user_id_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX media_folders_user_id_index ON public.media_folders USING btree (user_id);
 
 
 --
@@ -3360,6 +3488,13 @@ CREATE INDEX menu_locations_menu_id_created_at_idx ON public.menu_locations USIN
 
 
 --
+-- Name: menu_locations_menu_id_created_at_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX menu_locations_menu_id_created_at_index ON public.menu_locations USING btree (menu_id, created_at);
+
+
+--
 -- Name: menu_nodes_menu_id_idx; Type: INDEX; Schema: public; Owner: root
 --
 
@@ -3367,10 +3502,24 @@ CREATE INDEX menu_nodes_menu_id_idx ON public.menu_nodes USING btree (menu_id);
 
 
 --
+-- Name: menu_nodes_menu_id_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX menu_nodes_menu_id_index ON public.menu_nodes USING btree (menu_id);
+
+
+--
 -- Name: menu_nodes_parent_id_idx; Type: INDEX; Schema: public; Owner: root
 --
 
 CREATE INDEX menu_nodes_parent_id_idx ON public.menu_nodes USING btree (parent_id);
+
+
+--
+-- Name: menu_nodes_parent_id_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX menu_nodes_parent_id_index ON public.menu_nodes USING btree (parent_id);
 
 
 --
@@ -3402,6 +3551,20 @@ CREATE INDEX meta_boxes_reference_id_idx ON public.meta_boxes USING btree (refer
 
 
 --
+-- Name: meta_boxes_reference_id_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX meta_boxes_reference_id_index ON public.meta_boxes USING btree (reference_id);
+
+
+--
+-- Name: pages_user_id_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX pages_user_id_index ON public.pages USING btree (user_id);
+
+
+--
 -- Name: password_resets_email_idx; Type: INDEX; Schema: public; Owner: root
 --
 
@@ -3420,6 +3583,13 @@ CREATE UNIQUE INDEX personal_access_tokens_token_idx ON public.personal_access_t
 --
 
 CREATE INDEX personal_access_tokens_tokenable_type_tokenable_id_idx ON public.personal_access_tokens USING btree (tokenable_type, tokenable_id);
+
+
+--
+-- Name: personal_access_tokens_tokenable_type_tokenable_id_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX personal_access_tokens_tokenable_type_tokenable_id_index ON public.personal_access_tokens USING btree (tokenable_type, tokenable_id);
 
 
 --
@@ -3451,10 +3621,31 @@ CREATE INDEX posts_status_idx ON public.posts USING btree (status);
 
 
 --
+-- Name: reference_id; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX reference_id ON public.menu_nodes USING btree (reference_id);
+
+
+--
+-- Name: reference_type; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX reference_type ON public.menu_nodes USING btree (reference_type);
+
+
+--
 -- Name: revisions_revisionable_id_revisionable_type_idx; Type: INDEX; Schema: public; Owner: root
 --
 
 CREATE INDEX revisions_revisionable_id_revisionable_type_idx ON public.revisions USING btree (revisionable_id, revisionable_type);
+
+
+--
+-- Name: revisions_revisionable_id_revisionable_type_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX revisions_revisionable_id_revisionable_type_index ON public.revisions USING btree (revisionable_id, revisionable_type);
 
 
 --
@@ -3465,6 +3656,13 @@ CREATE INDEX role_users_role_id_idx ON public.role_users USING btree (role_id);
 
 
 --
+-- Name: role_users_role_id_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX role_users_role_id_index ON public.role_users USING btree (role_id);
+
+
+--
 -- Name: role_users_user_id_idx; Type: INDEX; Schema: public; Owner: root
 --
 
@@ -3472,10 +3670,24 @@ CREATE INDEX role_users_user_id_idx ON public.role_users USING btree (user_id);
 
 
 --
+-- Name: role_users_user_id_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX role_users_user_id_index ON public.role_users USING btree (user_id);
+
+
+--
 -- Name: roles_created_by_idx; Type: INDEX; Schema: public; Owner: root
 --
 
 CREATE INDEX roles_created_by_idx ON public.roles USING btree (created_by);
+
+
+--
+-- Name: roles_created_by_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX roles_created_by_index ON public.roles USING btree (created_by);
 
 
 --
@@ -3493,6 +3705,13 @@ CREATE INDEX roles_updated_by_idx ON public.roles USING btree (updated_by);
 
 
 --
+-- Name: roles_updated_by_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX roles_updated_by_index ON public.roles USING btree (updated_by);
+
+
+--
 -- Name: settings_key_idx; Type: INDEX; Schema: public; Owner: root
 --
 
@@ -3500,10 +3719,45 @@ CREATE UNIQUE INDEX settings_key_idx ON public.settings USING btree (key);
 
 
 --
+-- Name: slugs_key_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX slugs_key_index ON public.slugs USING btree (key);
+
+
+--
+-- Name: slugs_prefix_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX slugs_prefix_index ON public.slugs USING btree (prefix);
+
+
+--
+-- Name: slugs_reference_id_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX slugs_reference_id_index ON public.slugs USING btree (reference_id);
+
+
+--
+-- Name: slugs_reference_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX slugs_reference_index ON public.slugs USING btree (reference_id, reference_type);
+
+
+--
 -- Name: user_meta_user_id_idx; Type: INDEX; Schema: public; Owner: root
 --
 
 CREATE INDEX user_meta_user_id_idx ON public.user_meta USING btree (user_id);
+
+
+--
+-- Name: user_meta_user_id_index; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX user_meta_user_id_index ON public.user_meta USING btree (user_id);
 
 
 --
@@ -3518,3 +3772,9 @@ CREATE UNIQUE INDEX users_email_idx ON public.users USING btree (email);
 --
 
 CREATE UNIQUE INDEX users_username_idx ON public.users USING btree (username);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
