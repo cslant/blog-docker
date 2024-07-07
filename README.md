@@ -1,6 +1,5 @@
 # Blog docker runner
 
-
 This repo is to set up the runner for updating the blog.
 
 We can use this runner to update the blog for development and production.
@@ -64,5 +63,11 @@ pg_dump -U username -h hostname database_name >> /path/to/backup.sql
 Example in this Docker:
 
 ```bash
-pg_dump -U root -h localhost blog >> /docker-entrypoint-initdb.d/cslant_blog.sql
+pg_dump -U root -h localhost cslant_blog >> /docker-entrypoint-initdb.d/cslant_blog.sql
+```
+
+## Restore database in Docker
+
+```bash
+psql -U root -h localhost cslant_blog < /docker-entrypoint-initdb.d/cslant_blog.sql
 ```
