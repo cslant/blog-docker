@@ -52,6 +52,18 @@ The runner has the following commands:
 | `start`     | Starts the blog with Docker |
 | `all`       | Runs all the commands       |
 
+To run a specific command, use the following command:
+
+```bash
+bash runner.sh <command>
+```
+
+For example, to run the `help` command to show the help message, use the following command:
+
+```bash
+bash runner.sh help
+```
+
 ## Backup database in Docker
 
 Backup this blog database to a SQL file:
