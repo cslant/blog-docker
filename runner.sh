@@ -25,6 +25,10 @@ case "$1" in
     git_sync "$2"
     ;;
 
+  install)
+    install
+    ;;
+
   resource)
     resource
     ;;
@@ -40,6 +44,8 @@ case "$1" in
   all)
     build
     git_sync all
+    install
+    resource
     start
     ;;
 
