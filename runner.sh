@@ -9,6 +9,7 @@ GIT_SSH_URL=${GIT_SSH_URL:-git@github.com:cslant}
 
 source ./setup/tips.sh
 source ./setup/git.sh
+source ./setup/resource.sh
 source ./setup/functions.sh
 
 case "$1" in
@@ -24,6 +25,14 @@ case "$1" in
     git_sync "$2"
     ;;
 
+  install)
+    install
+    ;;
+
+  resource)
+    resource
+    ;;
+
   build)
     build
     ;;
@@ -35,6 +44,8 @@ case "$1" in
   all)
     build
     git_sync all
+    install
+    resource
     start
     ;;
 
