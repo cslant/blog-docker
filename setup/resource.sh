@@ -6,7 +6,7 @@ resource() {
 }
 
 resource_lang() {
-  LANG_PATH="$SOURCE_CODE_PATH/resource/lang"
+  LANG_PATH="$SOURCE_CODE_PATH/blog-admin/lang"
 
   if [ ! -d "$LANG_PATH" ]; then
     mkdir -p "$LANG_PATH"
@@ -21,7 +21,7 @@ resource_lang() {
 }
 
 resource_public() {
-  PUBLIC_PATH="$SOURCE_CODE_PATH/resource/public"
+  PUBLIC_PATH="$SOURCE_CODE_PATH/blog-admin/public"
 
   if [ ! -d "$PUBLIC_PATH" ]; then
     mkdir -p "$PUBLIC_PATH"
