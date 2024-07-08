@@ -56,6 +56,18 @@ Then, run the following command to start the runner.
 bash runner.sh all
 ```
 
+## Update host file
+
+Add the following lines to the `/etc/hosts` file:
+
+```bash
+127.0.0.1       blog.cslant.com.local admin.blog.cslant.com.local api.blog.csla.com.local
+```
+
+If your using another domain, please update the domain in the `.env` file and update the domain in the `/etc/hosts` file as well.
+
+---
+
 ## Usage
 
 The runner has the following commands:
@@ -79,6 +91,8 @@ For example, to run the `help` command to show the help message, use the followi
 ```bash
 bash runner.sh help
 ```
+
+---
 
 ## Backup database in Docker
 
