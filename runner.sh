@@ -22,7 +22,9 @@ case "$1" in
     ;;
 
   git_sync)
-    git_sync "$2"
+    # $2: all, admin, fe, api-package
+    # $3: -f or --force
+    git_sync "$2" "${3:-none}"
     ;;
 
   install)
