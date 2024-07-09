@@ -46,15 +46,15 @@ BLOG_ADMIN_DIR=hello
 > 
 > 1. If the `SOURCE_CODE_PATH` is wrong, the runner will not be able to find the source code. So, please make sure the `SOURCE_CODE_PATH` is correct.
 >
->   - So please get the full path of the `SOURCE_CODE_PATH` with the following command:
+>       - So please get the full path of the `SOURCE_CODE_PATH` with the following command:
 > 
->   ```bash
->   pwd
->   ```
+>       ```bash
+>       pwd
+>       ```
 > 
 > 2. Ensure the `GIT_SSH_URL` and `GIT_TOKEN` are correct. If the values are wrong, the runner will not be able to sync the repositories.
 > 
->   - Please get `GIT_TOKEN` from [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic).
+>       - Please get `GIT_TOKEN` from [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic).
 
 Then, you can just run the following command to start the runner.
 

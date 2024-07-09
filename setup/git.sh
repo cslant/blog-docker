@@ -1,5 +1,6 @@
 git_sync() {
   echo '📥 Syncing blog repositories...'
+
   FORCE=0
   if [ "$2" = '-f' ] || [ "$2" = '--force' ]; then
     FORCE=1
