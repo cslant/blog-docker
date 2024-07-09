@@ -19,7 +19,7 @@ welcome() {
 
 usage() {
   welcome
-  echo "Usage: bash $0 [command] [args]"
+  echo "Usage: bash $0 [command] [args] [options]"
   echo ''
   echo 'Commands:'
   echo '  welcome         Show welcome message'
@@ -31,17 +31,26 @@ usage() {
   echo '  resource        Download blog resources'
   echo '  all             Sync git repositories and build blog'
   echo ''
-  echo 'Args for git_sync:'
+  echo '------------------------------------------------------'
+  echo ''
+  echo 'Args for "git_sync":'
   echo '  admin           Sync blog-admin repository'
   echo '  fe              Sync blog-fe repository'
   echo '  api-package     Sync blog-api-package repository'
   echo '  all             Sync all blog repositories'
   echo ''
+  echo '  ∟ Options:'
+  echo '    -f, --force   Force sync repositories'
+  echo ''
+  echo '------------------------------------------------------'
+  echo ''
   echo 'Example:'
   echo "  bash $0 help"
+  echo "  bash $0 build"
   echo "  bash $0 git_sync admin"
   echo "  bash $0 git_sync all"
-  echo "  bash $0 build"
+  echo "  bash $0 git_sync all -f"
+  echo "  bash $0 install"
   echo "  bash $0 start"
   echo "  bash $0 all"
   echo ''
