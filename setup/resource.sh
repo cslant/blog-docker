@@ -1,4 +1,4 @@
-GITHUB_TOKEN="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"
+GITHUB_TOKEN=${GIT_TOKEN:-ghp_1234567890}
 
 resource() {
   resource_lang
