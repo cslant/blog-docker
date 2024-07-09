@@ -12,7 +12,7 @@ First, copy the `.env.example` file to `.env` and update the values.
 envsubst < .env.example > .env
 ```
 
-if you don't have `envsubst` command, you can use the following command:
+If you don't have `envsubst` command, you can use the following command:
 
 ```bash
 cp .env.example .env
@@ -41,22 +41,22 @@ BLOG_ADMIN_DIR=hello
 ```
 
 > [!IMPORTANT]
-> ## Command can't be used if wrong values are set in the `.env` file.
+> ### Command can't be used if wrong values are set in the `.env` file.
 > 
 > * If the `SOURCE_CODE_PATH` is wrong, the runner will not be able to find the source code. So, please make sure the `SOURCE_CODE_PATH` is correct.
 >
-> So please get full path of the `SOURCE_CODE_PATH` with the following command:
+> So please get the full path of the `SOURCE_CODE_PATH` with the following command:
 > ```bash
 > pwd
 > ```
 
-Then, run the following command to start the runner.
+Then, you can just run the following command to start the runner.
 
 ```bash
 bash runner.sh all
 ```
 
-## Update host file
+### Update host file
 
 Add the following lines to the `/etc/hosts` file:
 
@@ -64,7 +64,7 @@ Add the following lines to the `/etc/hosts` file:
 127.0.0.1       blog.cslant.com.local admin.blog.cslant.com.local api.blog.csla.com.local
 ```
 
-If your using another domain, please update the domain in the `.env` file and update the domain in the `/etc/hosts` file as well.
+If you're using another domain, please update the domain in the `.env` file and update the domain in the `/etc/hosts` file as well.
 
 ---
 
