@@ -54,6 +54,25 @@ services:
       - BLOG_ADMIN_DOMAIN=${BLOG_ADMIN_DOMAIN}
       - BLOG_ADMIN_DIR=${BLOG_ADMIN_DIR}
 
+  ## FRONTEND SERVICES
+  node:
+    container_name: "${COMPOSE_PROJECT_NAME:-blog}-node"
+    build:
+      context: node
+      args:
+        - TZ=${TZ}
+        - USER_ID=${USER_ID:-1000}
+        - GROUP_ID=${GROUP_ID:-1000}
+    networks:
+      - blog
+    volumes:
+      - ${SOURCE_CODE_PATH}:/var/dev
+    environment:
+      - BLOG_DOMAIN=${BLOG_DOMAIN}
+      - BLOG_API_DOMAIN=${BLOG_API_DOMAIN}
+      - BLOG_ADMIN_DOMAIN=${BLOG_ADMIN_DOMAIN}
+      - BLOG_ADMIN_DIR=${BLOG_ADMIN_DIR}
+
   ## DATABASE SERVICES
   postgres:
     container_name: "${COMPOSE_PROJECT_NAME:-blog}-postgres"
