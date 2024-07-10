@@ -39,6 +39,8 @@ BLOG_API_DOMAIN=api.blog.cslant.com.local
 BLOG_ADMIN_DOMAIN=admin.blog.cslant.com.local
 
 BLOG_ADMIN_DIR=hello
+
+FE_COMMAND=dev
 ```
 
 > [!IMPORTANT]
