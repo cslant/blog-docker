@@ -40,7 +40,7 @@ usage() {
   echo '  all             Sync all blog repositories'
   echo ''
   echo '  ∟ Options:'
-  echo '    -f, --force   Force sync repositories'
+  echo '    -f, --force   Force sync repositories (Remove existing directories and clone again)'
   echo ''
   echo '------------------------------------------------------'
   echo ''
