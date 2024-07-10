@@ -73,6 +73,16 @@ services:
       - BLOG_ADMIN_DOMAIN=${BLOG_ADMIN_DOMAIN}
       - BLOG_ADMIN_DIR=${BLOG_ADMIN_DIR}
 
+  fe:
+    container_name: "${COMPOSE_PROJECT_NAME}-fe"
+    image: ${COMPOSE_PROJECT_NAME}-node
+    networks:
+      - blog
+    volumes:
+      - ${SOURCE_CODE_PATH}/blog-fe:/var/dev/blog-fe
+    working_dir: "/var/dev/blog-fe"
+    command: [ "npx", "yarn", "${FE_COMMAND:-start}" ]
+
   ## DATABASE SERVICES
   postgres:
     container_name: "${COMPOSE_PROJECT_NAME:-blog}-postgres"

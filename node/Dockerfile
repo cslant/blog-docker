@@ -19,6 +19,6 @@ USER csdev
 
 RUN echo Y | yarn -v
 
-WORKDIR /var/dev/blog-fe
+WORKDIR /var/dev
 
-CMD ["npx", "next", "dev"]
+CMD ["ash", "-l"]
