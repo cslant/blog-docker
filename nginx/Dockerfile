@@ -1,4 +1,4 @@
-FROM nginx:1.26.0-alpine3.19
+FROM nginx:1.26.0-alpine
 LABEL maintainer="Tan Nguyen <tannp27@gmail.com>"
 
 COPY nginx.conf /etc/nginx/

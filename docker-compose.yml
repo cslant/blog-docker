@@ -1,12 +1,12 @@
 networks:
-  backend:
+  blog:
     driver: bridge
 
 volumes:
   postgres:
     driver: local
   pgadmin:
-      driver: local
+    driver: local
 
 services:
   ## WEB SERVICE
@@ -31,7 +31,7 @@ services:
       - NGINX_HOST_HTTP_PORT=${NGINX_HOST_HTTP_PORT:-80}
       - NGINX_HOST_HTTPS_PORT=${NGINX_HOST_HTTPS_PORT:-443}
     networks:
-      - backend
+      - blog
     depends_on:
       - php83
 
@@ -45,7 +45,7 @@ services:
         - USER_ID=${USER_ID:-1000}
         - GROUP_ID=${GROUP_ID:-1000}
     networks:
-      - backend
+      - blog
     volumes:
       - ${SOURCE_CODE_PATH}:/var/dev
     environment:
@@ -53,6 +53,35 @@ services:
       - BLOG_API_DOMAIN=${BLOG_API_DOMAIN}
       - BLOG_ADMIN_DOMAIN=${BLOG_ADMIN_DOMAIN}
       - BLOG_ADMIN_DIR=${BLOG_ADMIN_DIR}
+
+  ## FRONTEND SERVICES
+  node:
+    container_name: "${COMPOSE_PROJECT_NAME:-blog}-node"
+    build:
+      context: node
+      args:
+        - TZ=${TZ}
+        - USER_ID=${USER_ID:-1000}
+        - GROUP_ID=${GROUP_ID:-1000}
+    networks:
+      - blog
+    volumes:
+      - ${SOURCE_CODE_PATH}:/var/dev
+    environment:
+      - BLOG_DOMAIN=${BLOG_DOMAIN}
+      - BLOG_API_DOMAIN=${BLOG_API_DOMAIN}
+      - BLOG_ADMIN_DOMAIN=${BLOG_ADMIN_DOMAIN}
+      - BLOG_ADMIN_DIR=${BLOG_ADMIN_DIR}
+
+  fe:
+    container_name: "${COMPOSE_PROJECT_NAME}-fe"
+    image: ${COMPOSE_PROJECT_NAME}-node
+    networks:
+      - blog
+    volumes:
+      - ${SOURCE_CODE_PATH}/blog-fe:/var/dev/blog-fe
+    working_dir: "/var/dev/blog-fe"
+    command: [ "npx", "yarn", "${FE_COMMAND:-start}" ]
 
   ## DATABASE SERVICES
   postgres:
@@ -62,12 +91,12 @@ services:
       args:
         - TZ=${TZ}
     networks:
-      - backend
+      - blog
     healthcheck:
-        test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
-        interval: 10s
-        timeout: 5s
-        retries: 5
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
       - postgres:/var/lib/postgresql/data
       - ./postgres/entry.d:/docker-entrypoint-initdb.d
@@ -83,7 +112,7 @@ services:
     container_name: "${COMPOSE_PROJECT_NAME:-blog}-pgadmin"
     image: dpage/pgadmin4
     networks:
-      - backend
+      - blog
     ports:
       - "${PGADMIN_HOST_PORT:-5050}:80"
     environment:

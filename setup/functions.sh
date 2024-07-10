@@ -11,7 +11,7 @@ start() {
   echo ''
   cd "$CURRENT_DIR" || exit
   echo "◎ Starting blog with Docker..."
-  docker compose up -d nginx postgres php83
+  docker compose up -d nginx postgres php83 node fe
 }
 
 install() {
