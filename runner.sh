@@ -7,6 +7,7 @@ set -ue
 
 GIT_SSH_URL=${GIT_SSH_URL:-git@github.com:cslant}
 
+source ./setup/ssl.sh
 source ./setup/tips.sh
 source ./setup/git.sh
 source ./setup/resource.sh
@@ -35,6 +36,10 @@ case "$1" in
     resource
     ;;
 
+  ssl)
+    ssl
+    ;;
+
   build)
     build
     ;;
@@ -44,8 +49,9 @@ case "$1" in
     ;;
 
   all)
+    ssl
     build
-    git_sync all
+    git_sync all "${2:-none}"
     install
     resource
     start

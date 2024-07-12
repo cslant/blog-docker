@@ -2,6 +2,7 @@ server {
     listen ${NGINX_HOST_HTTP_PORT};
 
     server_name ${BLOG_DOMAIN};
+    include /etc/nginx/conf.d/${BLOG_ADMIN_DOMAIN}.ssl.conf;
     root /var/dev;
     index index.php index.html index.htm;
 
