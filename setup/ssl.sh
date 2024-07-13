@@ -1,9 +1,23 @@
-ssl() {
-  if [ ! -d "$CURRENT_DIR/nginx/conf/customs" ]; then
-    echo "Folder could not be found, creating folder..."
-    mkdir -p nginx/conf/customs
-  fi
+DOMAINS=(
+  "${BLOG_DOMAIN}"
+  "${BLOG_API_DOMAIN}"
+  "${BLOG_ADMIN_DOMAIN}"
+)
 
+if [ ! -d "$CURRENT_DIR/nginx/conf/customs" ]; then
+  echo "◎ Folder could not be found, creating folder..."
+  mkdir -p "$CURRENT_DIR"/nginx/conf/customs
+fi
+
+for domain in "${DOMAINS[@]}"; do
+  if [ ! -f "$CURRENT_DIR/nginx/conf/customs/${domain}.conf" ]; then
+    touch "$CURRENT_DIR/nginx/conf/customs/${domain}.conf"
+    echo "Create successful file ${domain}.conf"
+  fi
+done
+
+## Setup SSL for domain
+ssl() {
   if [ "${IS_SSL}" == "true" ]; then
     echo ''
     echo '⚡ Setup SSL for domain ⚡'

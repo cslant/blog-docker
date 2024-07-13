@@ -5,6 +5,7 @@ server {
     root /var/dev/blog-admin/public;
     index index.php index.html index.htm;
 
+    ## Include custom config
     include /etc/nginx/conf.d/customs/${BLOG_ADMIN_DOMAIN}.ssl.conf;
 
     # Serve /${BLOG_ADMIN_DIR} contents when accessing /

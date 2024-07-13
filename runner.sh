@@ -7,9 +7,9 @@ set -ue
 
 GIT_SSH_URL=${GIT_SSH_URL:-git@github.com:cslant}
 
-source ./setup/ssl.sh
 source ./setup/tips.sh
 source ./setup/git.sh
+source ./setup/ssl.sh
 source ./setup/resource.sh
 source ./setup/functions.sh
 
