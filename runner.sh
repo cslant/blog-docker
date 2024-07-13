@@ -45,7 +45,7 @@ case "$1" in
 
   all)
     build
-    git_sync all
+    git_sync all "${2:-none}"
     install
     resource
     start
