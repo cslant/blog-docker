@@ -45,27 +45,21 @@ function generate_cert_files() {
   CERTS_PATH="$CURRENT_DIR/nginx/server/certs"
   cd "$CERTS_PATH" || exit
 
-  BLOG_CERTS_PATH="$CERTS_PATH/${BLOG_DOMAIN}.pem"
-  if [ ! -f "$BLOG_CERTS_PATH" ]; then
-      mkcert "${BLOG_DOMAIN}"
-  else
-    echo "Certificate for ${BLOG_DOMAIN} already exists."
-  fi
-
-  API_CERTS_PATH="$CERTS_PATH/${BLOG_API_DOMAIN}.pem"
-  if [ ! -f "$API_CERTS_PATH" ]; then
-    mkcert "${BLOG_API_DOMAIN}"
-  else
-    echo "Certificate for ${BLOG_API_DOMAIN} already exists."
-  fi
-
-  ADMIN_CERTS_PATH="$CERTS_PATH/${BLOG_ADMIN_DOMAIN}.pem"
-  if [ ! -f "$ADMIN_CERTS_PATH" ]; then
-     mkcert "${BLOG_ADMIN_DOMAIN}"
-  else
-     echo "Certificate for ${BLOG_ADMIN_DOMAIN} already exists."
-  fi
+  for domain in "${DOMAINS[@]}"; do
+    create_cert_items "${domain}"
+  done
 
   echo "Certificates generated successfully."
   cd "$CURRENT_DIR" || exit
+}
+
+function create_cert_items() {
+  DOMAIN=$1
+  CERTS_PATH="$CURRENT_DIR/nginx/server/certs"
+
+  if [ ! -f "$CERTS_PATH/${DOMAIN}.pem" ]; then
+    mkcert "${DOMAIN}"
+  else
+    echo "Certificate for ${DOMAIN} already exists."
+  fi
 }
