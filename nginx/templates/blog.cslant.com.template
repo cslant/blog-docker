@@ -10,7 +10,7 @@ server {
     set $upstream_fe fe:3000;
 
     access_log /var/log/nginx/${BLOG_DOMAIN}-access.log;
-        error_log /var/log/nginx/${BLOG_DOMAIN}-error.log debug;
+    error_log /var/log/nginx/${BLOG_DOMAIN}-error.log debug;
 
     location / {
         proxy_pass http://$upstream_fe;
