@@ -4,11 +4,6 @@ DOMAINS=(
   "${BLOG_ADMIN_DOMAIN}"
 )
 
-if [ ! -d "$CURRENT_DIR/nginx/conf/customs" ]; then
-  echo "◎ Folder could not be found, creating folder..."
-  mkdir -p "$CURRENT_DIR"/nginx/conf/customs
-fi
-
 for domain in "${DOMAINS[@]}"; do
   if [ ! -f "$CURRENT_DIR/nginx/conf/customs/${domain}.conf" ]; then
     touch "$CURRENT_DIR/nginx/conf/customs/${domain}.conf"
@@ -32,11 +27,6 @@ ssl() {
       sudo cp mkcert /usr/local/bin/
     else
       echo "mkcert is already installed"
-    fi
-
-    if [ ! -d "nginx/server/certs" ]; then
-      echo "Folder could not be found, creating folder..."
-      mkdir -p nginx/server/certs
     fi
 
     generate_cert_files
