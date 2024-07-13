@@ -30,22 +30,20 @@ ssl() {
 }
 
 function generate_cert_files() {
-  CERTS_PATH="$CURRENT_DIR/nginx/server/certs"
-
   for domain in "${DOMAINS[@]}"; do
-    create_cert_items "${domain}" "$CERTS_PATH"
+    create_cert_items "${domain}"
   done
 
   echo "Certificates generated successfully."
 }
 
 function create_cert_items() {
-  DOMAIN=$1
+  CERTS_PATH="$CURRENT_DIR/nginx/server/certs"
 
-  if [ ! -f "$2/${DOMAIN}.pem" ]; then
-    implement_cert "${DOMAIN}" "$2"
+  if [ ! -f "$CERTS_PATH/${1}.pem" ]; then
+    implement_cert "${1}" "$CERTS_PATH"
   else
-    echo "Certificate for ${DOMAIN} already exists."
+    echo "Certificate for ${1} already exists."
   fi
 }
 
