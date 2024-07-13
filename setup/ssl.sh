@@ -21,52 +21,34 @@ ssl() {
   if [ "${IS_SSL}" == "true" ]; then
     echo ''
     echo '⚡ Setup SSL for domain ⚡'
-  if ! command -v mkcert &> /dev/null
-  then
-    echo "mkcert could not be found, installing..."
-    sudo apt install libnss3-tools
 
-    sudo wget https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-linux-amd64 && \
-    sudo mv mkcert-v1.4.3-linux-amd64 mkcert && \
-    sudo chmod +x mkcert && \
-    sudo cp mkcert /usr/local/bin/
-  else
-    echo "mkcert is already installed"
-  fi
+    if ! command -v mkcert &> /dev/null; then
+      echo "mkcert could not be found, installing..."
+      sudo apt install libnss3-tools
 
-  if [ ! -d "nginx/server/certs" ]; then
-    echo "Folder could not be found, creating folder..."
-    mkdir -p nginx/server/certs
-  fi
-  cd "$SOURCE_DIR" || exit
-  cd nginx/server/certs || exit
+      sudo wget https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-linux-amd64 && \
+      sudo mv mkcert-v1.4.3-linux-amd64 mkcert && \
+      sudo chmod +x mkcert && \
+      sudo cp mkcert /usr/local/bin/
+    else
+      echo "mkcert is already installed"
+    fi
 
-  if [ ! -f "${BLOG_DOMAIN}.pem" ]; then
-    mkcert ${BLOG_DOMAIN}
-  else
-    echo "Certificate for ${BLOG_DOMAIN} already exists."
-  fi
+    if [ ! -d "nginx/server/certs" ]; then
+      echo "Folder could not be found, creating folder..."
+      mkdir -p nginx/server/certs
+    fi
 
-  if [ ! -f "${BLOG_API_DOMAIN}.pem" ]; then
-    mkcert ${BLOG_API_DOMAIN}
-  else
-    echo "Certificate for ${BLOG_API_DOMAIN} already exists."
-  fi
+    create_certs
 
-  if [ ! -f "${BLOG_ADMIN_DOMAIN}.pem" ]; then
-     mkcert ${BLOG_ADMIN_DOMAIN}
-  else
-     echo "Certificate for ${BLOG_ADMIN_DOMAIN} already exists."
-  fi
+    cd "$SOURCE_DIR" || exit
+    cd nginx/conf/customs || exit
 
-  cd "$SOURCE_DIR" || exit
-  cd nginx/conf/customs || exit
-
-  DOMAIN=(
-    "${BLOG_DOMAIN}"
-    "${BLOG_API_DOMAIN}"
-    "${BLOG_ADMIN_DOMAIN}"
-  )
+    DOMAIN=(
+      "${BLOG_DOMAIN}"
+      "${BLOG_API_DOMAIN}"
+      "${BLOG_ADMIN_DOMAIN}"
+    )
      for domain in "${DOMAIN[@]}"; do
        SSL_CONTENT="ssl_certificate /var/www/certs/${domain}.local.pem;\nssl_certificate_key /var/www/certs/${domain}-key.pem;"
        if [ ! -s "${domain}.ssl.conf" ]; then
@@ -77,32 +59,28 @@ ssl() {
          echo "${domain}.ssl.conf already exists and update."
        fi
      done
-  else
-     cd nginx/conf/customs
-     if [ ! -f "${BLOG_DOMAIN}.ssl.conf" ]; then
-       touch "${BLOG_DOMAIN}.ssl.conf"
-       echo "Create successful file ${BLOG_DOMAIN}.ssl.conf"
-     else
-       echo "" | tee "${BLOG_DOMAIN}.ssl.conf"
-       echo "Remove text in file ${BLOG_DOMAIN}.ssl.conf"
-     fi
-
-     if [ ! -f "${BLOG_API_DOMAIN}.ssl.conf" ]; then
-       touch "${BLOG_API_DOMAIN}.ssl.conf"
-       echo "Create successful file ${BLOG_API_DOMAIN}.ssl.conf"
-     else
-       echo "" | tee "${BLOG_API_DOMAIN}.ssl.conf"
-       echo "Remove text in file ${BLOG_API_DOMAIN}.ssl.conf"
-     fi
-
-     if [ ! -f "${BLOG_ADMIN_DOMAIN}.ssl.conf" ]; then
-       touch "${BLOG_ADMIN_DOMAIN}.ssl.conf"
-       echo "Create successful file ${BLOG_ADMIN_DOMAIN}.ssl.conf"
-     else
-       echo "" | tee "${BLOG_ADMIN_DOMAIN}.ssl.conf"
-       echo "Remove text in file ${BLOG_ADMIN_DOMAIN}.ssl.conf"
-     fi
   fi
 }
 
+function create_certs() {
+  BLOG_CERTS_PATH="$CURRENT_DIR/nginx/server/certs/${BLOG_DOMAIN}.pem"
+  if [ ! -f "$BLOG_CERTS_PATH" ]; then
+      mkcert "${BLOG_DOMAIN}"
+  else
+    echo "Certificate for ${BLOG_DOMAIN} already exists."
+  fi
 
+  API_CERTS_PATH="$CURRENT_DIR/nginx/server/certs/${BLOG_API_DOMAIN}.pem"
+  if [ ! -f "$API_CERTS_PATH" ]; then
+    mkcert "${BLOG_API_DOMAIN}"
+  else
+    echo "Certificate for ${BLOG_API_DOMAIN} already exists."
+  fi
+
+  ADMIN_CERTS_PATH="$CURRENT_DIR/nginx/server/certs/${BLOG_ADMIN_DOMAIN}.pem"
+  if [ ! -f "$ADMIN_CERTS_PATH" ]; then
+     mkcert "${BLOG_ADMIN_DOMAIN}"
+  else
+     echo "Certificate for ${BLOG_ADMIN_DOMAIN} already exists."
+  fi
+}
