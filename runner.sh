@@ -1,5 +1,14 @@
 #! /bin/bash
 
+# sync env file
+if [ ! -f .env ]; then
+  if ! command -v envsubst &> /dev/null; then
+    cp .env.example .env
+  else
+    envsubst < .env.example > .env
+  fi
+fi
+
 set -a
 source .env
 set +a
