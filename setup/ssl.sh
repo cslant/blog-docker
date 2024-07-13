@@ -43,23 +43,35 @@ ssl() {
 
 function generate_cert_files() {
   CERTS_PATH="$CURRENT_DIR/nginx/server/certs"
-  cd "$CERTS_PATH" || exit
 
   for domain in "${DOMAINS[@]}"; do
-    create_cert_items "${domain}"
+    create_cert_items "${domain}" "$CERTS_PATH"
   done
 
   echo "Certificates generated successfully."
-  cd "$CURRENT_DIR" || exit
 }
 
 function create_cert_items() {
   DOMAIN=$1
-  CERTS_PATH="$CURRENT_DIR/nginx/server/certs"
 
-  if [ ! -f "$CERTS_PATH/${DOMAIN}.pem" ]; then
-    mkcert "${DOMAIN}"
+  if [ ! -f "$2/${DOMAIN}.pem" ]; then
+    implement_cert "${DOMAIN}" "$2"
   else
     echo "Certificate for ${DOMAIN} already exists."
+  fi
+}
+
+function implement_cert() {
+  DOMAIN=$1
+  CERTS_PATH=$2
+
+  if command -v mkcert &> /dev/null; then
+    mkcert -install
+    mkcert -cert-file "${CERTS_PATH}/${DOMAIN}.pem" -key-file "${CERTS_PATH}/${DOMAIN}-key.pem" "${DOMAIN}"
+  elif command -v openssl &> /dev/null; then
+    openssl req -x509 -out "${CERTS_PATH}/${DOMAIN}.pem" -keyout "${CERTS_PATH}/${DOMAIN}-key.pem" \
+      -newkey rsa:2048 -nodes -sha256 \
+      -subj '/CN=localhost' -extensions EXT -config <( \
+       printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
   fi
 }
