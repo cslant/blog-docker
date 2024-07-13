@@ -17,18 +17,6 @@ ssl() {
     echo ''
     echo '⚡ Setup SSL for domain ⚡'
 
-    if ! command -v mkcert &> /dev/null; then
-      echo "mkcert could not be found, installing..."
-      sudo apt install libnss3-tools
-
-      sudo wget https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-linux-amd64 && \
-      sudo mv mkcert-v1.4.3-linux-amd64 mkcert && \
-      sudo chmod +x mkcert && \
-      sudo cp mkcert /usr/local/bin/
-    else
-      echo "mkcert is already installed"
-    fi
-
     generate_cert_files
 
     CUSTOMS_PATH="$CURRENT_DIR/nginx/conf/customs"
