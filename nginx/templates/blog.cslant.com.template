@@ -2,9 +2,10 @@ server {
     listen ${NGINX_HOST_HTTP_PORT};
 
     server_name ${BLOG_DOMAIN};
-    include /etc/nginx/conf.d/customs/${BLOG_ADMIN_DOMAIN}.ssl.conf;
     root /var/dev;
     index index.php index.html index.htm;
+
+    include /etc/nginx/conf.d/customs/${BLOG_ADMIN_DOMAIN}.ssl.conf;
 
     ## Set upstream using variable to let nginx start without checking exists
     set $upstream_fe fe:3000;
