@@ -5,8 +5,8 @@ DOMAINS=(
 )
 
 for domain in "${DOMAINS[@]}"; do
-  if [ ! -f "$CURRENT_DIR/nginx/conf/customs/${domain}.conf" ]; then
-    touch "$CURRENT_DIR/nginx/conf/customs/${domain}.conf"
+  if [ ! -f "$CURRENT_DIR/nginx/conf/customs/${domain}.ssl.conf" ]; then
+    touch "$CURRENT_DIR/nginx/conf/customs/${domain}.ssl.conf"
     echo "Create successful file ${domain}.conf"
   fi
 done
