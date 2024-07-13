@@ -18,8 +18,8 @@ services:
         - TZ=${TZ}
     volumes:
       - ./nginx/templates:/etc/nginx/templates
-      - ./nginx/server/certs/:/var/www/certs/
-      - ./docker/conf/customs/:/etc/nginx/conf.d/
+      - ./nginx/server/certs/:/var/www/certs
+      - ./nginx/conf/customs/:/etc/nginx/conf.d/customs
       - ${LOG_PATH}/nginx:/var/log/nginx
       - ${SOURCE_CODE_PATH}:/var/dev
     ports:

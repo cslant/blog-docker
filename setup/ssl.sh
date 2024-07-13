@@ -1,5 +1,5 @@
 ssl() {
-  if [ ! -d "nginx/conf/customs" ]; then
+  if [ ! -d "$CURRENT_DIR/nginx/conf/customs" ]; then
     echo "Folder could not be found, creating folder..."
     mkdir -p nginx/conf/customs
   fi
