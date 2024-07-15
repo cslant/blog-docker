@@ -1,5 +1,6 @@
 server {
-    listen 443 ssl http2;
+   listen 80;
+   listen [::]:80;
 
     server_name ${BLOG_API_DOMAIN};
     root /var/dev/blog-admin/public;

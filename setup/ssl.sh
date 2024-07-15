@@ -21,7 +21,7 @@ ssl() {
 
     CUSTOMS_PATH="$CURRENT_DIR/nginx/conf/customs"
     for domain in "${DOMAINS[@]}"; do
-      SSL_CONTENT="ssl_certificate /var/www/certs/${domain}.pem;\nssl_certificate_key /var/www/certs/${domain}-key.pem;"
+      SSL_CONTENT="listen 443 ssl http2;\nlisten [::]:443 ssl http2;\nssl_certificate /var/www/certs/${domain}.pem;\nssl_certificate_key /var/www/certs/${domain}-key.pem;"
 
       echo -e "$SSL_CONTENT" | tee "$CUSTOMS_PATH/${domain}.ssl.conf"
       echo "${domain}.ssl.conf setup successfully."
