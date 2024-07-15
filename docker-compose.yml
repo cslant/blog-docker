@@ -19,7 +19,7 @@ services:
     volumes:
       - ./nginx/templates:/etc/nginx/templates
       - ./nginx/server/certs:/var/www/certs
-      - ./nginx/conf/customs:/etc/nginx/conf.d/customs
+      - ./nginx/conf/customs:/etc/nginx/customs
       - ${LOG_PATH}/nginx:/var/log/nginx
       - ${SOURCE_CODE_PATH}:/var/dev
     ports:

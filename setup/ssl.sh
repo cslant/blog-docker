@@ -21,7 +21,7 @@ ssl() {
 
     CUSTOMS_PATH="$CURRENT_DIR/nginx/conf/customs"
     for domain in "${DOMAINS[@]}"; do
-      SSL_CONTENT="ssl_certificate /var/www/certs/${domain}.local.pem;\nssl_certificate_key /var/www/certs/${domain}-key.pem;"
+      SSL_CONTENT="ssl_certificate /var/www/certs/${domain}.pem;\nssl_certificate_key /var/www/certs/${domain}-key.pem;"
 
       echo -e "$SSL_CONTENT" | tee "$CUSTOMS_PATH/${domain}.ssl.conf"
       echo "${domain}.ssl.conf setup successfully."
@@ -43,7 +43,7 @@ function create_cert_items() {
   if [ ! -f "$CERTS_PATH/${1}.pem" ]; then
     implement_cert "${1}" "$CERTS_PATH"
   else
-    echo "Certificate for ${1} already exists."
+    echo " ∟ Certificate for ${1} already exists."
   fi
 }
 

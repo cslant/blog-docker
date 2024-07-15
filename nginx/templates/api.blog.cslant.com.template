@@ -1,11 +1,11 @@
 server {
-    listen ${NGINX_HOST_HTTP_PORT};
+    listen 443 ssl http2;
 
     server_name ${BLOG_API_DOMAIN};
     root /var/dev/blog-admin/public;
     index index.php index.html index.htm;
 
-    include /etc/nginx/conf.d/customs/${BLOG_API_DOMAIN}.ssl.conf;
+    include /etc/nginx/customs/${BLOG_API_DOMAIN}.ssl.conf;
 
     access_log /var/log/nginx/${BLOG_API_DOMAIN}-access.log;
     error_log /var/log/nginx/${BLOG_API_DOMAIN}-error.log debug;
