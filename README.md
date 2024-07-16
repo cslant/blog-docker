@@ -77,7 +77,7 @@ bash runner.sh all
 Add the following lines to the `/etc/hosts` file:
 
 ```bash
-127.0.0.1       blog.cslant.com.local admin.blog.cslant.com.local api.blog.csla.com.local
+127.0.0.1       blog.cslant.com.local admin.blog.cslant.com.local api.blog.cslant.com.local
 ```
 
 If you're using another domain, please update the domain in the `.env` file and update the domain in the `/etc/hosts` file as well.

@@ -1,9 +1,13 @@
 server {
-    listen ${NGINX_HOST_HTTP_PORT};
+    listen 80;
+    listen [::]:80;
 
     server_name ${BLOG_ADMIN_DOMAIN};
     root /var/dev/blog-admin/public;
     index index.php index.html index.htm;
+
+    ## Include custom config
+    include /etc/nginx/customs/${BLOG_ADMIN_DOMAIN}.ssl.conf;
 
     # Serve /${BLOG_ADMIN_DIR} contents when accessing /
     location ~ ^/$ {

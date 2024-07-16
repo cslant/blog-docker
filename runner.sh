@@ -1,5 +1,14 @@
 #! /bin/bash
 
+# sync env file
+if [ ! -f .env ]; then
+  if ! command -v envsubst &> /dev/null; then
+    cp .env.example .env
+  else
+    envsubst < .env.example > .env
+  fi
+fi
+
 set -a
 source .env
 set +a
@@ -9,6 +18,7 @@ GIT_SSH_URL=${GIT_SSH_URL:-git@github.com:cslant}
 
 source ./setup/tips.sh
 source ./setup/git.sh
+source ./setup/ssl.sh
 source ./setup/resource.sh
 source ./setup/functions.sh
 
@@ -35,6 +45,10 @@ case "$1" in
     resource
     ;;
 
+  ssl)
+    ssl
+    ;;
+
   build)
     build
     ;;
@@ -44,6 +58,7 @@ case "$1" in
     ;;
 
   all)
+    ssl
     build
     git_sync all "${2:-none}"
     install
