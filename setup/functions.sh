@@ -29,4 +29,9 @@ install() {
   docker compose run --rm -w /var/dev/blog-admin php83 ash -l -c "\
     composer install; \
   "
+
+  echo "  ∟ Blog Fe..."
+  docker compose run --rm -w /var/dev/blog-fe node ash -l -c "\
+    yarn install; \
+  "
 }
