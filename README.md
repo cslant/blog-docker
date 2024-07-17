@@ -6,7 +6,7 @@
      \____|____/|_____/_/   \_\_| \_| |_|   |____/|_____\___/ \____|
  ```
 
-# Blog docker runner
+# CSlant blog docker runner
 
 This repo is to set up the runner for updating the blog.
 

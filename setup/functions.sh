@@ -34,4 +34,11 @@ install() {
   docker compose run --rm -w /var/dev/blog-fe node ash -l -c "\
     yarn install; \
   "
+
+  if [ "$FE_COMMAND" == "start" ]; then
+    echo "  ∟ Building blog-fe..."
+    docker compose run --rm -w /var/dev/blog-fe node ash -l -c "\
+      yarn build; \
+    "
+  fi
 }
