@@ -3,6 +3,7 @@ GITHUB_TOKEN=${GIT_TOKEN:-ghp_1234567890}
 resource() {
   resource_lang
   resource_public
+  resource_database
 }
 
 resource_lang() {
@@ -33,4 +34,17 @@ resource_public() {
     -o "$PUBLIC_PATH/Archive.zip"
 
   unzip -o "$PUBLIC_PATH/Archive.zip" -d "$PUBLIC_PATH"
+}
+
+resource_database() {
+  DATABASE_PATH="$CURRENT_DIR/postgres/entry.d"
+
+  if [ ! -d "$DATABASE_PATH" ]; then
+    mkdir -p "$DATABASE_PATH"
+  fi
+
+  curl \
+    -H "Authorization: token $GITHUB_TOKEN" \
+    -L https://raw.githubusercontent.com/cslant-community/blog-storage/docker/database/postgres/cslant_blog.sql \
+    -o "$DATABASE_PATH/cslant_blog.sql"
 }

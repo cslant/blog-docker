@@ -57,6 +57,10 @@ case "$1" in
     start
     ;;
 
+  resource_database)
+    resource_database
+    ;;
+
   all)
     ssl
     build
