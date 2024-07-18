@@ -41,10 +41,6 @@ resource_database() {
   echo '» 🚀 Downloading database file... 🚀'
   DATABASE_PATH="$CURRENT_DIR/postgres/entry.d"
 
-  if [ ! -d "$DATABASE_PATH" ]; then
-    mkdir -p "$DATABASE_PATH"
-  fi
-
   if [ -f "$DATABASE_PATH/cslant_blog.sql" ]; then
     echo "» Database file already exists"
     echo ''
