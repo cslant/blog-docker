@@ -3,7 +3,6 @@ GITHUB_TOKEN=${GIT_TOKEN:-ghp_1234567890}
 resource() {
   resource_lang
   resource_public
-  resource_database
 }
 
 resource_lang() {
