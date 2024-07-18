@@ -63,6 +63,7 @@ case "$1" in
 
   all)
     ssl
+    resource_database
     build
     git_sync all "${2:-none}"
     install

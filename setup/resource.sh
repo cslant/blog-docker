@@ -37,10 +37,14 @@ resource_public() {
 }
 
 resource_database() {
+  echo ''
+  echo '» 🚀 Downloading database file... 🚀'
   DATABASE_PATH="$CURRENT_DIR/postgres/entry.d"
 
-  if [ ! -d "$DATABASE_PATH" ]; then
-    mkdir -p "$DATABASE_PATH"
+  if [ -f "$DATABASE_PATH/cslant_blog.sql" ]; then
+    echo "» Database file already exists"
+    echo ''
+    return
   fi
 
   curl \
