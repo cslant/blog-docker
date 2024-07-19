@@ -6,9 +6,9 @@
      \____|____/|_____/_/   \_\_| \_| |_|   |____/|_____\___/ \____|
  ```
 
-# CSlant blog docker runner
+# CSlant blog docker installer
 
-This repo is to set up the runner for updating the blog.
+This repo is to set up the CSlant blog with Docker.
 
 We can use this runner to update the blog for development and production.
 
