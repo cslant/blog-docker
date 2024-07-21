@@ -21,12 +21,12 @@ install() {
   echo "◎ Installing blog with Docker..."
 
   echo "  ∟ Blog Core Package..."
-  docker compose run --rm -w /var/dev/blog-admin/packages/blog-core php83 ash -l -c "\
+  docker compose run --rm -w /var/dev/blog-admin/packages/"${BLOG_PACKAGE_REPO_NAMES[1]}" php83 ash -l -c "\
     composer install; \
   "
 
   echo "  ∟ Blog API Package..."
-  docker compose run --rm -w /var/dev/blog-admin/packages/blog-api-package php83 ash -l -c "\
+  docker compose run --rm -w /var/dev/blog-admin/packages/"${BLOG_PACKAGE_REPO_NAMES[0]}" php83 ash -l -c "\
     composer install; \
   "
 
