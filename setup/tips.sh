@@ -37,6 +37,7 @@ usage() {
   echo '  admin           Sync blog-admin repository'
   echo '  fe              Sync blog-fe repository'
   echo '  api-package     Sync blog-api-package repository'
+  echo '  private-modules Sync blog-private-modules repository'
   echo '  all             Sync all blog repositories'
   echo ''
   echo '  ∟ Options:'
