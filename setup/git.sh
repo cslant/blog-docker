@@ -164,6 +164,12 @@ blog_private_modules_sync() {
   echo ''
 }
 
+blog_all_packages_sync() {
+  for package in "${BLOG_PACKAGES[@]}"; do
+    blog_package_sync "$package" "$1"
+  done
+}
+
 blog_api_package_sync() {
   echo '📥 Syncing api package...'
   blog_package_sync "${BLOG_PACKAGES[0]}" "$1"
@@ -172,10 +178,4 @@ blog_api_package_sync() {
 blog_core_package_sync() {
   echo '📥 Syncing core package...'
   blog_package_sync "${BLOG_PACKAGES[1]}" "$1"
-}
-
-blog_all_packages_sync() {
-  for package in "${BLOG_PACKAGES[@]}"; do
-    blog_package_sync "$package" "$1"
-  done
 }
