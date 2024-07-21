@@ -87,6 +87,38 @@ blog_fe_sync() {
   echo ''
 }
 
+blog_package_sync() {
+  REPO_NAME=$1
+
+  cd "$SOURCE_DIR/blog-admin" || exit
+
+  if [ ! -d "packages" ]; then
+    mkdir packages
+  fi
+
+  cd packages || exit
+
+  if [ "$2" = 1 ]; then
+    echo "» Force syncing $REPO_NAME repository..."
+
+    rm -rf "$REPO_NAME"
+  else
+    echo "» Syncing $REPO_NAME repository..."
+  fi
+
+  if [ -z "$(ls -A "$REPO_NAME")" ]; then
+    echo "  ∟ Cloning $REPO_NAME repository..."
+    git clone "$GIT_SSH_URL"/"$REPO_NAME".git
+  else
+    echo "  ∟ Pulling $REPO_NAME repository..."
+    cd "$REPO_NAME" || exit
+
+    git checkout main -f
+    git pull
+  fi
+  echo ''
+}
+
 blog_api_package_sync() {
   REPO_NAME='blog-api-package'
 
