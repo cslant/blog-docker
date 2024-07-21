@@ -1,0 +1,12 @@
+.env.*
+
+.idea
+.vscode
+.github
+*.log
+
+.git
+.gitkeep
+.gitignore
+
+README.md
