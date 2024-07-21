@@ -19,10 +19,15 @@ git_sync() {
       blog_api_package_sync "$FORCE"
       ;;
 
+    private-modules)
+      blog_private_modules_sync "$FORCE"
+      ;;
+
     all)
       blog_admin_sync "$FORCE"
       blog_fe_sync "$FORCE"
       blog_api_package_sync "$FORCE"
+      blog_private_modules_sync "$FORCE"
       ;;
 
     *)
@@ -129,6 +134,34 @@ blog_api_package_sync() {
   fi
 
   cd packages || exit
+
+  if [ "$1" = 1 ]; then
+    echo "» Force syncing $REPO_NAME repository..."
+
+    rm -rf "$REPO_NAME"
+  else
+    echo "» Syncing $REPO_NAME repository..."
+  fi
+
+  if [ -z "$(ls -A "$REPO_NAME")" ]; then
+    echo "  ∟ Cloning $REPO_NAME repository..."
+    git clone "$GIT_SSH_URL"/"$REPO_NAME".git
+  else
+    echo "  ∟ Pulling $REPO_NAME repository..."
+    cd "$REPO_NAME" || exit
+
+    git checkout main -f
+    git pull
+  fi
+  echo ''
+}
+
+blog_private_modules_sync() {
+  REPO_NAME='blog-private-modules'
+
+  echo '📥 Syncing private modules...'
+
+  cd "$SOURCE_DIR/blog-admin" || exit
 
   if [ "$1" = 1 ]; then
     echo "» Force syncing $REPO_NAME repository..."
