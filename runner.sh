@@ -16,6 +16,7 @@ set -ue
 
 GIT_SSH_URL=${GIT_SSH_URL:-git@github.com:cslant}
 
+source ./setup/variables.sh
 source ./setup/tips.sh
 source ./setup/git.sh
 source ./setup/ssl.sh

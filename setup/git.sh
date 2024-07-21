@@ -1,8 +1,3 @@
-BLOG_PACKAGE_REPO_NAMES=(
-  'blog-api-package'
-  'blog-core'
-)
-
 git_sync() {
   echo '📥 Syncing blog repositories...'
 

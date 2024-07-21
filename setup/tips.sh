@@ -1,6 +1,3 @@
-CURRENT_DIR=$(pwd)
-SOURCE_DIR=$(readlink -f "$SOURCE_CODE_PATH")
-
 welcome() {
   echo '
   ____ ____  _        _    _   _ _____   ____  _     ___   ____
