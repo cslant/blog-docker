@@ -1,6 +1,3 @@
-CURRENT_DIR=$(pwd)
-SOURCE_DIR=$(readlink -f "$SOURCE_CODE_PATH")
-
 welcome() {
   echo '
   ____ ____  _        _    _   _ _____   ____  _     ___   ____
@@ -34,10 +31,13 @@ usage() {
   echo '------------------------------------------------------'
   echo ''
   echo 'Args for "git_sync":'
-  echo '  admin           Sync blog-admin repository'
-  echo '  fe              Sync blog-fe repository'
-  echo '  api-package     Sync blog-api-package repository'
-  echo '  all             Sync all blog repositories'
+  echo '  admin               Sync blog-admin repository'
+  echo '  fe                  Sync blog-fe repository'
+  echo '  api-package         Sync blog-api-package repository'
+  echo '  core-package        Sync blog-core repository'
+  echo '  all-packages        Sync all blog packages repositories'
+  echo '  private-modules     Sync blog-private-modules repository'
+  echo '  all                 Sync all related blog repositories'
   echo ''
   echo '  ∟ Options:'
   echo '    -f, --force   Force sync repositories (Remove existing directories and clone again)'
