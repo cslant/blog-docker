@@ -1,3 +1,8 @@
+BLOG_PACKAGES=(
+  'blog-api-package'
+  'blog-core'
+)
+
 git_sync() {
   echo '📥 Syncing blog repositories...'
 
@@ -23,6 +28,10 @@ git_sync() {
       blog_core_package_sync "$FORCE"
       ;;
 
+    all-packages)
+      blog_all_packages_sync "$FORCE"
+      ;;
+
     private-modules)
       blog_private_modules_sync "$FORCE"
       ;;
@@ -31,7 +40,6 @@ git_sync() {
       blog_admin_sync "$FORCE"
       blog_fe_sync "$FORCE"
       blog_api_package_sync "$FORCE"
-      blog_private_modules_sync "$FORCE"
       ;;
 
     *)
@@ -128,20 +136,6 @@ blog_package_sync() {
   echo ''
 }
 
-blog_api_package_sync() {
-  REPO_NAME='blog-api-package'
-
-  echo '📥 Syncing api package...'
-  blog_package_sync "$REPO_NAME" "$1"
-}
-
-blog_core_package_sync() {
-  REPO_NAME='blog-core-package'
-
-  echo '📥 Syncing core package...'
-  blog_package_sync "$REPO_NAME" "$1"
-}
-
 blog_private_modules_sync() {
   REPO_NAME='blog-private-modules'
 
@@ -168,4 +162,20 @@ blog_private_modules_sync() {
     git pull
   fi
   echo ''
+}
+
+blog_api_package_sync() {
+  echo '📥 Syncing api package...'
+  blog_package_sync "${BLOG_PACKAGES[0]}" "$1"
+}
+
+blog_core_package_sync() {
+  echo '📥 Syncing core package...'
+  blog_package_sync "${BLOG_PACKAGES[1]}" "$1"
+}
+
+blog_all_packages_sync() {
+  for package in "${BLOG_PACKAGES[@]}"; do
+    blog_package_sync "$package" "$1"
+  done
 }
