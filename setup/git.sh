@@ -19,6 +19,10 @@ git_sync() {
       blog_api_package_sync "$FORCE"
       ;;
 
+    core-package)
+      blog_core_package_sync "$FORCE"
+      ;;
+
     private-modules)
       blog_private_modules_sync "$FORCE"
       ;;
@@ -127,33 +131,15 @@ blog_package_sync() {
 blog_api_package_sync() {
   REPO_NAME='blog-api-package'
 
-  cd "$SOURCE_DIR/blog-admin" || exit
+  echo '📥 Syncing api package...'
+  blog_package_sync "$REPO_NAME" "$1"
+}
 
-  if [ ! -d "packages" ]; then
-    mkdir packages
-  fi
+blog_core_package_sync() {
+  REPO_NAME='blog-core-package'
 
-  cd packages || exit
-
-  if [ "$1" = 1 ]; then
-    echo "» Force syncing $REPO_NAME repository..."
-
-    rm -rf "$REPO_NAME"
-  else
-    echo "» Syncing $REPO_NAME repository..."
-  fi
-
-  if [ -z "$(ls -A "$REPO_NAME")" ]; then
-    echo "  ∟ Cloning $REPO_NAME repository..."
-    git clone "$GIT_SSH_URL"/"$REPO_NAME".git
-  else
-    echo "  ∟ Pulling $REPO_NAME repository..."
-    cd "$REPO_NAME" || exit
-
-    git checkout main -f
-    git pull
-  fi
-  echo ''
+  echo '📥 Syncing core package...'
+  blog_package_sync "$REPO_NAME" "$1"
 }
 
 blog_private_modules_sync() {
