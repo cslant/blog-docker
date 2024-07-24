@@ -7,7 +7,7 @@ volumes:
     driver: local
   pgadmin:
     driver: local
-  esdata:
+  elasticsearch:
     driver: local
 
 services:
@@ -173,7 +173,7 @@ services:
     networks:
       - blog
     volumes:
-      - esdata:/var/lib/elasticsearch/data
+      - elasticsearch:/var/lib/elasticsearch/data
     ulimits:
       memlock:
         soft: -1
