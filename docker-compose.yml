@@ -15,7 +15,7 @@ services:
   nginx:
     container_name: "${COMPOSE_PROJECT_NAME}-nginx"
     build:
-      context: ./nginx
+      context: nginx
       args:
         - TZ=${TZ}
     volumes:
@@ -89,7 +89,7 @@ services:
       - BLOG_ADMIN_DOMAIN=${BLOG_ADMIN_DOMAIN}
       - BLOG_ADMIN_DIR=${BLOG_ADMIN_DIR}
     healthcheck:
-      test: [ "CMD-SHELL", "curl -f http://localhost || exit 1" ]
+      test: [ "CMD-SHELL", "curl -f http://localhost:3000 || exit 1" ]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -113,7 +113,7 @@ services:
   postgres:
     container_name: "${COMPOSE_PROJECT_NAME:-blog}-postgres"
     build:
-      context: ./postgres
+      context: postgres
       args:
         - TZ=${TZ}
     networks:
@@ -161,7 +161,8 @@ services:
   ## ELASTICSEARCH SERVICE
   elasticsearch:
     container_name: "${COMPOSE_PROJECT_NAME:-blog}-elasticsearch"
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.14.3
+    build:
+        context: elastic
     environment:
       - discovery.type=${ELASTICSEARCH_DISCOVERY_TYPE:-single-node}
       - xpack.security.enabled=${ELASTICSEARCH_XPACK_SECURITY_ENABLED:-false}
@@ -179,7 +180,7 @@ services:
         soft: -1
         hard: -1
     healthcheck:
-      test: [ "CMD-SHELL", "curl -f http://localhost:9200 || exit 1" ]
+      test: [ "CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1" ]
       interval: 30s
       timeout: 10s
       retries: 5
