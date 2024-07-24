@@ -39,6 +39,11 @@ services:
       - blog
     depends_on:
       - php83
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   ## BACKEND SERVICES
   php83:
@@ -59,6 +64,11 @@ services:
       - BLOG_API_ROUTE_PREFIX=${BLOG_API_ROUTE_PREFIX}
       - BLOG_ADMIN_DOMAIN=${BLOG_ADMIN_DOMAIN}
       - BLOG_ADMIN_DIR=${BLOG_ADMIN_DIR}
+    healthcheck:
+      test: [ "CMD", "php", "-v" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   ## FRONTEND SERVICES
   node:
@@ -78,6 +88,11 @@ services:
       - BLOG_API_DOMAIN=${BLOG_API_DOMAIN}
       - BLOG_ADMIN_DOMAIN=${BLOG_ADMIN_DOMAIN}
       - BLOG_ADMIN_DIR=${BLOG_ADMIN_DIR}
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   fe:
     container_name: "${COMPOSE_PROJECT_NAME}-fe"
@@ -88,6 +103,11 @@ services:
       - ${SOURCE_CODE_PATH}/blog-fe:/var/dev/blog-fe
     working_dir: "/var/dev/blog-fe"
     command: [ "npx", "yarn", "${FE_COMMAND:-start}" ]
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   ## DATABASE SERVICES
   postgres:
@@ -132,6 +152,11 @@ services:
       PGADMIN_LISTEN_PORT: 80
     volumes:
       - pgadmin:/var/lib/pgadmin
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:5050 || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   ## ELASTICSEARCH SERVICE
   elasticsearch:
@@ -141,8 +166,6 @@ services:
       - discovery.type=${ELASTICSEARCH_DISCOVERY_TYPE:-single-node}
       - xpack.security.enabled=${ELASTICSEARCH_XPACK_SECURITY_ENABLED:-false}
       - ES_JAVA_OPTS=${ELASTICSEARCH_JAVA_OPTS:-"-Xms512m -Xmx512m"}
-      - ELASTIC_USERNAME=${ELASTIC_USERNAME}
-      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - bootstrap.memory_lock=true
     ports:
       - "${ELASTICSEARCH_HTTP_PORT:-9200}:9200"
@@ -155,3 +178,8 @@ services:
       memlock:
         soft: -1
         hard: -1
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:9200 || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
