@@ -88,11 +88,6 @@ services:
       - BLOG_API_DOMAIN=${BLOG_API_DOMAIN}
       - BLOG_ADMIN_DOMAIN=${BLOG_ADMIN_DOMAIN}
       - BLOG_ADMIN_DIR=${BLOG_ADMIN_DIR}
-    healthcheck:
-      test: [ "CMD-SHELL", "curl -f http://localhost:3000 || exit 1" ]
-      interval: 30s
-      timeout: 10s
-      retries: 5
 
   fe:
     container_name: "${COMPOSE_PROJECT_NAME}-fe"
@@ -103,11 +98,6 @@ services:
       - ${SOURCE_CODE_PATH}/blog-fe:/var/dev/blog-fe
     working_dir: "/var/dev/blog-fe"
     command: [ "npx", "yarn", "${FE_COMMAND:-start}" ]
-    healthcheck:
-      test: [ "CMD-SHELL", "curl -f http://localhost || exit 1" ]
-      interval: 30s
-      timeout: 10s
-      retries: 5
 
   ## DATABASE SERVICES
   postgres:
@@ -152,11 +142,6 @@ services:
       PGADMIN_LISTEN_PORT: 80
     volumes:
       - pgadmin:/var/lib/pgadmin
-    healthcheck:
-      test: [ "CMD-SHELL", "curl -f http://localhost:5050 || exit 1" ]
-      interval: 30s
-      timeout: 10s
-      retries: 5
 
   ## ELASTICSEARCH SERVICE
   elasticsearch:
