@@ -7,13 +7,15 @@ volumes:
     driver: local
   pgadmin:
     driver: local
+  elasticsearch:
+    driver: local
 
 services:
   ## WEB SERVICE
   nginx:
     container_name: "${COMPOSE_PROJECT_NAME}-nginx"
     build:
-      context: ./nginx
+      context: nginx
       args:
         - TZ=${TZ}
     volumes:
@@ -37,6 +39,11 @@ services:
       - blog
     depends_on:
       - php83
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   ## BACKEND SERVICES
   php83:
@@ -57,6 +64,11 @@ services:
       - BLOG_API_ROUTE_PREFIX=${BLOG_API_ROUTE_PREFIX}
       - BLOG_ADMIN_DOMAIN=${BLOG_ADMIN_DOMAIN}
       - BLOG_ADMIN_DIR=${BLOG_ADMIN_DIR}
+    healthcheck:
+      test: [ "CMD", "php", "-v" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   ## FRONTEND SERVICES
   node:
@@ -91,7 +103,7 @@ services:
   postgres:
     container_name: "${COMPOSE_PROJECT_NAME:-blog}-postgres"
     build:
-      context: ./postgres
+      context: postgres
       args:
         - TZ=${TZ}
     networks:
@@ -130,3 +142,30 @@ services:
       PGADMIN_LISTEN_PORT: 80
     volumes:
       - pgadmin:/var/lib/pgadmin
+
+  ## ELASTICSEARCH SERVICE
+  elasticsearch:
+    container_name: "${COMPOSE_PROJECT_NAME:-blog}-elasticsearch"
+    build:
+        context: elastic
+    environment:
+      - discovery.type=${ELASTICSEARCH_DISCOVERY_TYPE:-single-node}
+      - xpack.security.enabled=${ELASTICSEARCH_XPACK_SECURITY_ENABLED:-false}
+      - ES_JAVA_OPTS=${ELASTICSEARCH_JAVA_OPTS:-"-Xms512m -Xmx512m"}
+      - bootstrap.memory_lock=true
+    ports:
+      - "${ELASTICSEARCH_HTTP_PORT:-9200}:9200"
+      - "${ELASTICSEARCH_TRANSPORT_PORT:-9300}:9300"
+    networks:
+      - blog
+    volumes:
+      - elasticsearch:/var/lib/elasticsearch/data
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
