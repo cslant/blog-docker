@@ -1,5 +1,5 @@
 networks:
-  blog:
+  cslant_blog:
     external: true
 
 volumes:
@@ -12,7 +12,7 @@ services:
     container_name: "${COMPOSE_PROJECT_NAME:-blog}-pgadmin"
     image: dpage/pgadmin4
     networks:
-      - blog
+      - cslant_blog
     ports:
       - "${PGADMIN_HOST_PORT:-5050}:80"
     environment:
