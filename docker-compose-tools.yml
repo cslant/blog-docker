@@ -1,0 +1,28 @@
+networks:
+  blog:
+    external: true
+
+volumes:
+  pgadmin:
+    driver: local
+
+services:
+  ## DATABASE ADMINISTRATION
+  pgadmin:
+    container_name: "${COMPOSE_PROJECT_NAME:-blog}-pgadmin"
+    image: dpage/pgadmin4
+    networks:
+      - blog
+    ports:
+      - "${PGADMIN_HOST_PORT:-5050}:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_SETUP_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_SETUP_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_CONFIG_SERVER_MODE: 'True'
+      PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: 'False'
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+      PGADMIN_LISTEN_PORT: 80
+    volumes:
+      - pgadmin:/var/lib/pgadmin
