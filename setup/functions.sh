@@ -1,6 +1,6 @@
 network() {
-  echo '🐳 Creating "cslant_blog" docker network 🌐'
   echo ''
+  echo '🐳 Creating "cslant_blog" docker network 🌐'
   cd "$CURRENT_DIR" || exit
 
   BLOG_NETWORK=cslant_blog
@@ -8,10 +8,12 @@ network() {
   echo "◎ Creating network..."
   if [ -z "$(docker network ls -q -f name=$BLOG_NETWORK)" ]; then
     docker network create $BLOG_NETWORK
+  else
+    echo "  ∟ Network already exists"
   fi
 }
 
-build() {
+build_handler() {
   echo '🐳 Building blog with Docker 🐳'
 
   network
@@ -19,17 +21,15 @@ build() {
   echo ''
   cd "$CURRENT_DIR" || exit
   echo "◎ Build blog with Docker..."
+}
+
+build() {
+  build_handler
   docker compose build
 }
 
 build_all() {
-  echo '🐳 Building blog with Docker 🐳'
-
-  network
-
-  echo ''
-  cd "$CURRENT_DIR" || exit
-  echo "◎ Build blog with Docker..."
+  build_handler
   docker compose -f docker-compose.yml -f docker-compose-tools.yml build
 }
 
