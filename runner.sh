@@ -56,6 +56,10 @@ case "$1" in
     start
     ;;
 
+  start_all)
+    start_all
+    ;;
+
   resource_database)
     resource_database
     ;;

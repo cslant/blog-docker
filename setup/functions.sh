@@ -11,7 +11,15 @@ start() {
   echo ''
   cd "$CURRENT_DIR" || exit
   echo "◎ Starting blog with Docker..."
-  docker compose up -d nginx postgres php83 node fe
+  docker compose up -d nginx postgres php83 node fe elasticsearch
+}
+
+start_all() {
+  echo '🚀 Starting blog with Docker 🚀'
+  echo ''
+  cd "$CURRENT_DIR" || exit
+  echo "◎ Starting blog with Docker..."
+  docker compose -f docker-compose.yml -f docker-compose-tools.yml up -d
 }
 
 install() {
