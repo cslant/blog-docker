@@ -22,25 +22,25 @@ source ./setup/resource.sh
 source ./setup/functions.sh
 
 case "$1" in
-  welcome)
+  welcome | w)
     welcome
     ;;
 
-  help)
+  help | h)
     usage
     ;;
 
-  git_sync)
+  git_sync | gs)
     # $2: all, admin, fe, api-package
     # $3: -f or --force
     git_sync "$2" "${3:-none}"
     ;;
 
-  install)
+  install | i)
     install
     ;;
 
-  resource)
+  resource | r)
     resource
     ;;
 
@@ -48,23 +48,23 @@ case "$1" in
     ssl
     ;;
 
-  build)
+  build | b)
     build
     ;;
 
-  start)
+  start | s)
     start
     ;;
 
-  start_all)
+  start_all | sa)
     start_all
     ;;
 
-  resource_database)
+  resource_database | rd)
     resource_database
     ;;
 
-  all)
+  all | a)
     ssl
     resource_database
     build

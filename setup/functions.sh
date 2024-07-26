@@ -1,9 +1,36 @@
+network() {
+  echo '🐳 Creating "cslant_blog" docker network 🌐'
+  echo ''
+  cd "$CURRENT_DIR" || exit
+
+  BLOG_NETWORK=cslant_blog
+
+  echo "◎ Creating network..."
+  if [ -z "$(docker network ls -q -f name=$BLOG_NETWORK)" ]; then
+    docker network create $BLOG_NETWORK
+  fi
+}
+
 build() {
   echo '🐳 Building blog with Docker 🐳'
+
+  network
+
   echo ''
   cd "$CURRENT_DIR" || exit
   echo "◎ Build blog with Docker..."
   docker compose build
+}
+
+build_all() {
+  echo '🐳 Building blog with Docker 🐳'
+
+  network
+
+  echo ''
+  cd "$CURRENT_DIR" || exit
+  echo "◎ Build blog with Docker..."
+  docker compose -f docker-compose.yml -f docker-compose-tools.yml build
 }
 
 start() {
