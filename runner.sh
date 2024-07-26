@@ -52,6 +52,10 @@ case "$1" in
     build
     ;;
 
+  build_all | ba)
+    build_all
+    ;;
+
   start | s)
     start
     ;;
