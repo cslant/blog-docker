@@ -88,15 +88,16 @@ If you're using another domain, please update the domain in the `.env` file and 
 
 The runner has the following commands:
 
-| Command    | Description                   |
-|------------|-------------------------------|
-| `help`     | Shows the help message        |
-| `git_sync` | Syncs blog repositories       |
-| `build`    | Builds the blog with Docker   |
-| `start`    | Starts the blog with Docker   |
-| `install`  | Install all blog dependencies |
-| `resource` | Download blog resources       |
-| `all`      | Runs all the commands         |
+| Command     | Description                        |
+|-------------|------------------------------------|
+| `help`      | Shows the help message             |
+| `git_sync`  | Syncs blog repositories            |
+| `build`     | Builds the blog with Docker        |
+| `start`     | Starts the blog with Docker        |
+| `start_all` | Starts all blog services in Docker |
+| `install`   | Install all blog dependencies      |
+| `resource`  | Download blog resources            |
+| `all`       | Runs all the commands              |
 
 To run a specific command, use the following command:
 

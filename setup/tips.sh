@@ -24,6 +24,7 @@ usage() {
   echo '  git_sync        Sync git repositories'
   echo '  build           Build blog with Docker'
   echo '  start           Start blog with Docker'
+  echo '  start_all       Start blog with Docker (All services: nginx, postgres, php83, node, fe, elasticsearch and more tools)'
   echo '  install         Install all blog dependencies'
   echo '  resource        Download blog resources'
   echo '  all             Sync git repositories and build blog'
@@ -52,6 +53,7 @@ usage() {
   echo "  bash $0 git_sync all -f"
   echo "  bash $0 install"
   echo "  bash $0 start"
+  echo "  bash $0 start_all"
   echo "  bash $0 all"
   echo ''
 }
