@@ -48,6 +48,10 @@ case "$1" in
     ssl
     ;;
 
+  network | n)
+    network
+    ;;
+
   build | b)
     build
     ;;

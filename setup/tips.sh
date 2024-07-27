@@ -24,6 +24,7 @@ usage() {
   echo '  git_sync | gs   Sync blog repositories'
   echo '  build | b       Build blog with Docker'
   echo '  build_all | ba  Build blog with Docker (All services: nginx, postgres, php83, node, fe, elasticsearch and more tools)'
+  echo '  network | n     Create Docker network'
   echo '  start | s       Start blog with Docker'
   echo '  start_all | sa  Start blog with Docker (All services: nginx, postgres, php83, node, fe, elasticsearch and more tools)'
   echo '  install | i     Install all blog dependencies'

@@ -72,6 +72,17 @@ Then, you can just run the following command to start the runner.
 bash runner.sh all
 ```
 
+The above command will run all the commands in the runner and start `nginx`, `php`, `node`, `fe` , `postgres` and `elasticsearch` services.
+
+---
+
+If you want to start all the services, you can use the following command:
+
+```bash
+bash runner.sh all
+bash runner.sh start_all
+```
+
 ### Update host file
 
 Add the following lines to the `/etc/hosts` file:
@@ -92,6 +103,7 @@ The runner has the following commands:
 |-------------------|--------------------------------------|
 | `help`, `h`       | Shows the help message               |
 | `git_sync`, `gs`  | Syncs the blog repositories          |
+| `network`, `n`    | Creates the Docker network           |
 | `build`, `b`      | Builds the blog with Docker          |
 | `build_all`, `ba` | Builds all blog services with Docker |
 | `start`, `s`      | Starts the blog services in Docker   |
