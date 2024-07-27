@@ -41,6 +41,10 @@ case "$1" in
     install
     ;;
 
+  update | u)
+    update
+    ;;
+
   resource | r)
     resource
     ;;
