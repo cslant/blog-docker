@@ -109,6 +109,7 @@ The runner has the following commands:
 | `start`, `s`      | Starts the blog services in Docker   |
 | `start_all`, `sa` | Starts all blog services in Docker   |
 | `install`, `i`    | Install all blog dependencies        |
+| `update`, `u`     | Update all blog dependencies         |
 | `resource`, `r`   | Download blog resources              |
 | `all`, `a`        | Runs all the commands                |
 
