@@ -28,6 +28,7 @@ usage() {
   echo '  start | s       Start blog with Docker'
   echo '  start_all | sa  Start blog with Docker (All services: nginx, postgres, php83, node, fe, elasticsearch and more tools)'
   echo '  install | i     Install all blog dependencies'
+  echo '  update | u      Update all blog dependencies'
   echo '  resource | r    Download blog resources'
   echo '  all | a         Sync git repositories and build blog'
   echo ''

@@ -20,6 +20,7 @@ source ./setup/git.sh
 source ./setup/ssl.sh
 source ./setup/resource.sh
 source ./setup/functions.sh
+source ./setup/handlers.sh
 
 case "$1" in
   welcome | w)
@@ -38,6 +39,10 @@ case "$1" in
 
   install | i)
     install
+    ;;
+
+  update | u)
+    update
     ;;
 
   resource | r)
