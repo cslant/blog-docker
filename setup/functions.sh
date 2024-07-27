@@ -23,51 +23,25 @@ build_handler() {
   echo "◎ Build blog with Docker..."
 }
 
-build() {
-  build_handler
-  docker compose build
-}
-
-build_all() {
-  build_handler
-  docker compose -f docker-compose.yml -f docker-compose-tools.yml build
-}
-
-start() {
-  echo '🚀 Starting blog with Docker 🚀'
-  echo ''
-  cd "$CURRENT_DIR" || exit
-  echo "◎ Starting blog with Docker..."
-  docker compose up -d nginx postgres php83 node fe elasticsearch
-}
-
-start_all() {
-  echo '🚀 Starting blog with Docker 🚀'
-  echo ''
-  cd "$CURRENT_DIR" || exit
-  echo "◎ Starting blog with Docker..."
-  docker compose -f docker-compose.yml -f docker-compose-tools.yml up -d
-}
-
-install() {
-  echo '🚀 Installing blog with Docker 🚀'
-  echo ''
-  cd "$CURRENT_DIR" || exit
-  echo "◎ Installing blog with Docker..."
-
+source_implement() {
+  if [ "$1" == "install" ]; then
+    COMPOSER_COMMAND="install"
+  else
+    COMPOSER_COMMAND="update"
+  fi
   echo "  ∟ Blog Core Package..."
   docker compose run --rm -w /var/dev/blog-admin/packages/"${BLOG_PACKAGE_REPO_NAMES[1]}" php83 ash -l -c "\
-    composer install; \
+    composer $COMPOSER_COMMAND; \
   "
 
   echo "  ∟ Blog API Package..."
   docker compose run --rm -w /var/dev/blog-admin/packages/"${BLOG_PACKAGE_REPO_NAMES[0]}" php83 ash -l -c "\
-    composer install; \
+    composer $COMPOSER_COMMAND; \
   "
 
   echo "  ∟ Blog Admin..."
   docker compose run --rm -w /var/dev/blog-admin php83 ash -l -c "\
-    composer install; \
+    composer $COMPOSER_COMMAND; \
   "
 
   echo "  ∟ Blog Fe..."
