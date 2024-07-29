@@ -33,9 +33,9 @@ git_sync() {
 
     all)
       blog_admin_sync "$FORCE"
+      blog_private_modules_sync "$FORCE"
       blog_fe_sync "$FORCE"
       blog_all_packages_sync "$FORCE"
-      blog_private_modules_sync "$FORCE"
       ;;
 
     *)
