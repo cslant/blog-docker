@@ -13,5 +13,11 @@ jobs:
       - name: Copy .env.example to .env
         run: cp .env.example .env
 
+      - name: Create folder for SOURCE_CODE_PATH
+        run: |
+          mkdir -p ../src
+
       - name: Run ShellCheck
         uses: ludeeus/action-shellcheck@master
+        with:
+          args: -x ./runner.sh
