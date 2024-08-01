@@ -1,3 +1,5 @@
+#! /bin/bash
+
 resource() {
   resource_lang
   resource_public

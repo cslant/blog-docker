@@ -1,3 +1,5 @@
+#! /bin/bash
+
 build() {
   build_handler
   docker compose build

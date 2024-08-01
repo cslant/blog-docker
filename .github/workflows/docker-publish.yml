@@ -21,3 +21,5 @@ jobs:
         uses: ludeeus/action-shellcheck@master
         with:
           args: -x ./runner.sh
+        env:
+          INPUT_ADDITIONAL_FILES: ".env ./setup/variables.sh ./setup/tips.sh ./setup/git.sh ./setup/ssl.sh ./setup/resource.sh ./setup/functions.sh ./setup/handlers.sh"
