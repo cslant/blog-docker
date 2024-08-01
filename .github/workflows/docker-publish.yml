@@ -7,9 +7,11 @@ jobs:
     name: Shellcheck
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Copy .env.example to .env
+        run: cp .env.example .env
 
       - name: Run ShellCheck
         uses: ludeeus/action-shellcheck@master
-        run: |
-          cp .env.example .env
