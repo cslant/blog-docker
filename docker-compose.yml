@@ -128,6 +128,8 @@ services:
     container_name: "${COMPOSE_PROJECT_NAME:-blog}-elasticsearch"
     build:
         context: elastic
+        args:
+          ELASTIC_STACK_VERSION: ${ELASTIC_STACK_VERSION:-8.14.3}
     environment:
       - discovery.type=${ELASTICSEARCH_DISCOVERY_TYPE:-single-node}
       - xpack.security.enabled=${ELASTICSEARCH_XPACK_SECURITY_ENABLED:-false}
