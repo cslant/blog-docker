@@ -1,3 +1,5 @@
+#!/bin/bash
+
 DOMAINS=(
   "${BLOG_DOMAIN}"
   "${BLOG_API_DOMAIN}"

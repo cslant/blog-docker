@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # sync env file
 if [ ! -f .env ]; then
@@ -10,6 +10,7 @@ if [ ! -f .env ]; then
 fi
 
 set -a
+# shellcheck disable=SC1091
 source .env
 set +a
 set -ue

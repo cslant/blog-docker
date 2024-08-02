@@ -1,3 +1,5 @@
+#!/bin/bash
+
 network() {
   echo ''
   echo '🐳 Creating "cslant_blog" docker network 🌐'
