@@ -43,3 +43,15 @@ update() {
 
   source_implement "update"
 }
+
+elasticsearch_import() {
+  echo '🚀 Importing Elasticsearch data 🚀'
+  echo ''
+  cd "$CURRENT_DIR" || exit
+  echo "◎ Importing Elasticsearch data..."
+
+  docker compose run --rm -w /var/dev/blog-admin php83 ash -l -c "\
+    php artisan scout:import \
+      \"CSlant\Blog\Core\Models\User\" \
+  "
+}
