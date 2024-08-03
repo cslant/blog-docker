@@ -1,4 +1,6 @@
-FROM php:8.3-cli-alpine
+ARG PHP_VERSION=8.3
+
+FROM php:${PHP_VERSION}-cli-alpine
 
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
