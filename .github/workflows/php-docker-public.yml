@@ -3,7 +3,7 @@ name: Publish Docker image
 on: [push]
 
 permissions:
-  contents: read
+  contents: write
 
 env:
   DOCKER_ID: ${{ secrets.DOCKER_ID }}
