@@ -1,1 +1,3 @@
-FROM docker.elastic.co/elasticsearch/elasticsearch:8.14.3
+ARG ELASTIC_STACK_VERSION
+
+FROM docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_STACK_VERSION}

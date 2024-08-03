@@ -78,6 +78,10 @@ case "$1" in
     resource_database
     ;;
 
+  es_import | ei)
+    elasticsearch_import
+    ;;
+
   all | a)
     ssl
     resource_database
@@ -85,6 +89,7 @@ case "$1" in
     git_sync all "${2:-none}"
     install
     resource
+    elasticsearch_import
     start
     ;;
 

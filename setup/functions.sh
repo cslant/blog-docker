@@ -58,3 +58,10 @@ source_implement() {
     "
   fi
 }
+
+scout_import() {
+  docker compose run --rm -w /var/dev/blog-admin php83 ash -l -c "\
+    php artisan scout:import \
+      \"CSlant\Blog\Core\Models\User\" \
+  "
+}

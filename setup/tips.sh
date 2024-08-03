@@ -32,6 +32,7 @@ usage() {
   echo '  install | i     Install all blog dependencies'
   echo '  update | u      Update all blog dependencies'
   echo '  resource | r    Download blog resources'
+  echo '  es_import | ei  Import Elasticsearch data'
   echo '  all | a         Sync git repositories and build blog'
   echo ''
   echo '------------------------------------------------------'
