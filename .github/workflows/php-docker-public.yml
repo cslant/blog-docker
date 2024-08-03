@@ -58,11 +58,13 @@ jobs:
             type=semver,pattern={{version}}
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
 
-      - name: Get version from Git tags
+      - name: Get latest version tag
         id: get_version
         run: |
-          version=$(git describe --tags --always --abbrev=0)
-          echo ::set-output name=version::$version
+          git fetch --tags
+          latest_tag=$(git tag -l | sort -V | tail -n 1)
+          echo "Latest tag: $latest_tag"
+          echo ::set-output name=version::$latest_tag
 
       - name: Increment version number
         id: inc_version
