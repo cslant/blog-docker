@@ -151,3 +151,17 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+
+  worker:
+    container_name: "${COMPOSE_PROJECT_NAME}-worker"
+    build:
+      context: worker
+      args:
+        - TZ=${TZ}
+        - USER_ID=${USER_ID}
+        - GROUP_ID=${GROUP_ID}
+    networks:
+      - cslant_blog
+    volumes:
+      - ${SOURCE_CODE_PATH}:/var/dev
+      - ./worker/supervisor.d:/etc/supervisor.d
