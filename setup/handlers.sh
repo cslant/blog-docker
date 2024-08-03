@@ -15,7 +15,7 @@ start() {
   echo ''
   cd "$CURRENT_DIR" || exit
   echo "◎ Starting blog with Docker..."
-  docker compose up -d nginx postgres php83 node fe elasticsearch
+  docker compose up -d nginx postgres php node fe elasticsearch
 }
 
 start_all() {

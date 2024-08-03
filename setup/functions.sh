@@ -32,17 +32,17 @@ source_implement() {
     COMPOSER_COMMAND="update"
   fi
   echo "  ∟ Blog Core Package..."
-  docker compose run --rm -w /var/dev/blog-admin/packages/"${BLOG_PACKAGE_REPO_NAMES[1]}" php83 ash -l -c "\
+  docker compose run --rm -w /var/dev/blog-admin/packages/"${BLOG_PACKAGE_REPO_NAMES[1]}" php ash -l -c "\
     composer $COMPOSER_COMMAND; \
   "
 
   echo "  ∟ Blog API Package..."
-  docker compose run --rm -w /var/dev/blog-admin/packages/"${BLOG_PACKAGE_REPO_NAMES[0]}" php83 ash -l -c "\
+  docker compose run --rm -w /var/dev/blog-admin/packages/"${BLOG_PACKAGE_REPO_NAMES[0]}" php ash -l -c "\
     composer $COMPOSER_COMMAND; \
   "
 
   echo "  ∟ Blog Admin..."
-  docker compose run --rm -w /var/dev/blog-admin php83 ash -l -c "\
+  docker compose run --rm -w /var/dev/blog-admin php ash -l -c "\
     composer $COMPOSER_COMMAND; \
   "
 
@@ -60,7 +60,7 @@ source_implement() {
 }
 
 scout_import() {
-  docker compose run --rm -w /var/dev/blog-admin php83 ash -l -c "\
+  docker compose run --rm -w /var/dev/blog-admin php ash -l -c "\
     php artisan scout:import \
       \"CSlant\Blog\Core\Models\User\" \
   "
