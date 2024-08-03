@@ -111,6 +111,7 @@ The runner has the following commands:
 | `install`, `i`    | Install all blog dependencies        |
 | `update`, `u`     | Update all blog dependencies         |
 | `resource`, `r`   | Download blog resources              |
+| `es_import`, `ei` | Import data to Elasticsearch         |
 | `all`, `a`        | Runs all the commands                |
 
 To run a specific command, use the following command:
