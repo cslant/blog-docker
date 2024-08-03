@@ -12,9 +12,9 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 
 ## Config user
 ARG USER_ID=1000
-ENV USER_ID ${USER_ID}
+ENV USER_ID=${USER_ID}
 ARG GROUP_ID=1000
-ENV GROUP_ID ${GROUP_ID}
+ENV GROUP_ID=${GROUP_ID}
 
 # ensure www-data user exists
 RUN set -eu; \
