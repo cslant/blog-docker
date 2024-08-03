@@ -91,8 +91,10 @@ jobs:
 
       - name: Set new version tag
         run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
           git tag ${{ steps.inc_version.outputs.new_version }}
-          git push origin ${{ steps.inc_version.outputs.new_version }}
+          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/cslant/blog-docker.git ${{ steps.inc_version.outputs.new_version }}
 
       - name: Build and push Docker image
         id: build-and-push
