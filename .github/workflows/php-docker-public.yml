@@ -109,7 +109,6 @@ jobs:
             type=ref,event=tag
             type=semver,pattern={{version}}
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
-            type=raw,value=${{ steps.inc_version.outputs.new_version }}
 
       - name: Build and push Docker image
         id: build-and-push
