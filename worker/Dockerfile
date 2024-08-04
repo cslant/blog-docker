@@ -1,6 +1,9 @@
 ARG PHP_VERSION=8.3
 
 FROM php:${PHP_VERSION}-cli-alpine
+LABEL maintainer="Tan Nguyen <tannp27@gmail.com>"
+LABEL authors="cslant"
+LABEL description="PHP Worker image for CSlant development - Using for Blog"
 
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
