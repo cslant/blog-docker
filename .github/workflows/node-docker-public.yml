@@ -1,0 +1,119 @@
+name: Publish Node image to Docker Hub
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+env:
+  IMAGE_NAME: blog-node
+  DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+  DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+jobs:
+  shellcheck:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        name: Checkout repository
+
+      - name: Copy .env.example to .env
+        run: cp .env.example .env
+
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          check_together: 'yes'
+          ignore_paths: >-
+            sources
+
+  push_to_registry:
+    if: github.event_name != 'pull_request'
+    name: Build and push Node image
+    needs: shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log into Docker Hub
+        uses: docker/login-action@v3
+        with:
+          registry: https://index.docker.io/v1/
+          username: ${{ env.DOCKERHUB_USERNAME }}
+          password: ${{ env.DOCKERHUB_PASSWORD }}
+
+      - name: Get latest version tag
+        id: get_version
+        run: |
+          git fetch --tags
+          # get the latest tag with regex pattern have vnode prefix
+          latest_tag=$(git tag -l | grep -E '^vnode' | sort -V | tail -n 1)
+          echo "Latest tag: $latest_tag"
+          echo "version=$latest_tag" >> $GITHUB_OUTPUT
+
+      - name: Increment version number
+        id: inc_version
+        run: |
+          version=${{ steps.get_version.outputs.version }}
+          version=${version#"v"}
+          if [ -z "$version" ]; then
+            major=0
+            minor=0
+            patch=0
+          else
+            IFS='.' read -r -a parts <<< "$version"
+            major=${parts[0]:-0}
+            minor=${parts[1]:-0}
+            patch=${parts[2]:-0}
+          fi
+          patch=$((patch+1))
+          if [ "$patch" -ge 100 ]; then
+            patch=0
+            minor=$((minor+1))
+          fi
+          if [ "$minor" -ge 10]; then
+            minor=0
+            major=$((major+1))
+          fi
+          new_version="v$major.$minor.$patch"
+          echo "New version: $new_version"
+          echo "new_version=$new_version" >> $GITHUB_OUTPUT
+
+      - name: Set new version tag
+        run: |
+          git tag ${{ steps.inc_version.outputs.new_version }}
+          git push origin ${{ steps.inc_version.outputs.new_version }}
+
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=tag
+            type=semver,pattern={{version}}
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+            type=raw,value=${{ steps.inc_version.outputs.new_version }}
+
+      - name: Build and push Node image
+        id: build-and-push
+        uses: docker/build-push-action@v6
+        with:
+          context: node
+          push: true
+          tags: |
+            ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+            ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ steps.inc_version.outputs.new_version }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            USER_ID=1000
+            GROUP_ID=1000
