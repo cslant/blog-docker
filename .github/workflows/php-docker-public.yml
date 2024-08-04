@@ -109,8 +109,8 @@ jobs:
           context: php
           push: true
           tags: |
-            ${{ steps.meta.outputs.tags }}
-            ${{ steps.inc_version.outputs.new_version }}
+            ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+            ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ steps.inc_version.outputs.new_version }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             PHP_VERSION=8.3
