@@ -51,7 +51,8 @@ jobs:
         id: get_version
         run: |
           git fetch --tags
-          latest_tag=$(git tag -l | sort -V | tail -n 1)
+          # get the latest tag with regex pattern have vphp prefix
+          latest_tag=$(git tag -l | grep -E '^vphp' | sort -V | tail -n 1)
           echo "Latest tag: $latest_tag"
           echo "version=$latest_tag" >> $GITHUB_OUTPUT
 
