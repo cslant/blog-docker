@@ -78,6 +78,7 @@ services:
   ## FRONTEND SERVICES
   node:
     container_name: "${COMPOSE_PROJECT_NAME:-blog}-node"
+    image: cslant/blog-node
     build:
       context: node
       args:
