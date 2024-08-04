@@ -50,6 +50,7 @@ services:
   ## BACKEND SERVICES
   php:
     container_name: "${COMPOSE_PROJECT_NAME:-blog}-php"
+    image: cslant/blog-php
     build:
       context: php
       args:
@@ -158,6 +159,7 @@ services:
 
   worker:
     container_name: "${COMPOSE_PROJECT_NAME}-worker"
+    image: cslant/blog-worker
     build:
       context: worker
       args:
