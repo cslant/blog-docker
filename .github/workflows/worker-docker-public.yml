@@ -1,4 +1,4 @@
-name: Publish PHP Docker image
+name: Publish Worker Docker image
 
 on:
   push:
@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 env:
-  IMAGE_NAME: blog-php
+  IMAGE_NAME: blog-worker
   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
   DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
 
@@ -28,12 +28,10 @@ jobs:
         uses: ludeeus/action-shellcheck@master
         with:
           check_together: 'yes'
-          ignore_paths: >-
-            sources
 
   push_to_registry:
     if: github.event_name != 'pull_request'
-    name: Build and push PHP image
+    name: Build and push Worker image
     needs: shellcheck
     runs-on: ubuntu-latest
     steps:
@@ -54,8 +52,8 @@ jobs:
         id: get_version
         run: |
           git fetch --tags
-          # get the latest tag with regex pattern have vphp prefix
-          latest_tag=$(git tag -l | grep -E '^vphp' | sort -V | tail -n 1)
+          # get the latest tag with regex pattern have vworker prefix
+          latest_tag=$(git tag -l | grep -E '^vworker' | sort -V | tail -n 1)
           echo "Latest tag: $latest_tag"
           echo "version=$latest_tag" >> $GITHUB_OUTPUT
 
@@ -104,11 +102,11 @@ jobs:
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
             type=raw,value=${{ steps.inc_version.outputs.new_version }}
 
-      - name: Build and push PHP image
+      - name: Build and push Worker image
         id: build-and-push
         uses: docker/build-push-action@v6
         with:
-          context: php
+          context: worker
           push: true
           tags: |
             ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
