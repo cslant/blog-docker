@@ -9,6 +9,7 @@ env:
   IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
   DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+  DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
 
 jobs:
   shellcheck:
@@ -45,7 +46,8 @@ jobs:
         with:
           registry: docker.io
           username: ${{ env.DOCKERHUB_USERNAME }}
-          password: ${{ env.DOCKERHUB_TOKEN }}
+          password: ${{ env.DOCKERHUB_PASSWORD }}
+          token: ${{ env.DOCKERHUB_TOKEN }}
 
       - name: Get latest version tag
         id: get_version
@@ -75,7 +77,7 @@ jobs:
             patch=0
             minor=$((minor+1))
           fi
-          if [ "$minor" -ge 10 ]; then
+          if [ "$minor" -ge 10]; then
             minor=0
             major=$((major+1))
           fi
