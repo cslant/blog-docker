@@ -1,4 +1,4 @@
-name: Publish Worker Docker image
+name: Publish Worker image to Docker Hub
 
 on:
   push:

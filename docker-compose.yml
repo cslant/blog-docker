@@ -50,6 +50,7 @@ services:
   ## BACKEND SERVICES
   php:
     container_name: "${COMPOSE_PROJECT_NAME:-blog}-php"
+    image: cslant/blog-php
     build:
       context: php
       args:
@@ -77,6 +78,7 @@ services:
   ## FRONTEND SERVICES
   node:
     container_name: "${COMPOSE_PROJECT_NAME:-blog}-node"
+    image: cslant/blog-node
     build:
       context: node
       args:
@@ -87,11 +89,6 @@ services:
       - cslant_blog
     volumes:
       - ${SOURCE_CODE_PATH}:/var/dev
-    environment:
-      - BLOG_DOMAIN=${BLOG_DOMAIN}
-      - BLOG_API_DOMAIN=${BLOG_API_DOMAIN}
-      - BLOG_ADMIN_DOMAIN=${BLOG_ADMIN_DOMAIN}
-      - BLOG_ADMIN_DIR=${BLOG_ADMIN_DIR}
 
   fe:
     container_name: "${COMPOSE_PROJECT_NAME}-fe"
@@ -158,6 +155,7 @@ services:
 
   worker:
     container_name: "${COMPOSE_PROJECT_NAME}-worker"
+    image: cslant/blog-worker
     build:
       context: worker
       args:
