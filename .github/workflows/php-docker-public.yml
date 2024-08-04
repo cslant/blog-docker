@@ -1,4 +1,4 @@
-name: Publish Docker image
+name: Publish PHP Docker image
 
 on: [push]
 
@@ -6,7 +6,7 @@ permissions:
   contents: write
 
 env:
-  IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
+  IMAGE_NAME: blog-php
   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
   DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
 
@@ -30,7 +30,7 @@ jobs:
 
   push_to_registry:
     if: github.event_name != 'pull_request'
-    name: Build and push Docker image
+    name: Build and push PHP image
     needs: shellcheck
     runs-on: ubuntu-latest
     steps:
@@ -100,7 +100,7 @@ jobs:
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
             type=raw,value=${{ steps.inc_version.outputs.new_version }}
 
-      - name: Build and push Docker image
+      - name: Build and push PHP image
         id: build-and-push
         uses: docker/build-push-action@v6
         with:
