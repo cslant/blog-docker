@@ -1,4 +1,4 @@
-name: Publish PHP Docker image
+name: Publish PHP image to Docker Hub
 
 on:
   push:
