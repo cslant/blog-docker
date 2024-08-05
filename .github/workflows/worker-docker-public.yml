@@ -94,7 +94,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.DOCKERHUB_ID }}/${{ env.IMAGE_NAME }}
           tags: |
             type=ref,event=branch
             type=ref,event=tag
@@ -109,8 +109,8 @@ jobs:
           context: worker
           push: true
           tags: |
-            ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
-            ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ steps.inc_version.outputs.new_version }}
+            ${{ env.DOCKERHUB_ID }}/${{ env.IMAGE_NAME }}:latest
+            ${{ env.DOCKERHUB_ID }}/${{ env.IMAGE_NAME }}:${{ steps.inc_version.outputs.new_version }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             PHP_VERSION=8.3
