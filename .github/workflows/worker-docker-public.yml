@@ -12,6 +12,7 @@ env:
   IMAGE_NAME: blog-worker
   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
   DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+  DOCKERHUB_ID: ${{ secrets.DOCKERHUB_ID }}
 
 jobs:
   shellcheck:
