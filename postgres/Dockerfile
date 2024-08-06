@@ -1,5 +1,7 @@
 FROM postgres:16.0
 LABEL maintainer="Tan Nguyen <tannp27@gmail.com>"
+LABEL authors="cslant"
+LABEL description="Postgres image for CSlant development - Using for Blog"
 
 #####################################
 # Set Timezone
