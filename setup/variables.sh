@@ -16,3 +16,6 @@ BLOG_PACKAGE_REPO_NAMES=(
   'blog-api-package'
   'blog-core'
 )
+
+# shellcheck disable=SC2034
+DATABASE_FILE_NAME=${DATABASE_FILE_NAME:-cslant_blog}

@@ -41,7 +41,7 @@ resource_database() {
   echo '» 🚀 Downloading database file... 🚀'
   DATABASE_PATH="$CURRENT_DIR/postgres/entry.d"
 
-  if [ -f "$DATABASE_PATH/cslant_blog.sql" ]; then
+  if [ -f "$DATABASE_PATH/$DATABASE_FILE_NAME.sql" ]; then
     echo "» Database file already exists"
     echo ''
     return
@@ -50,5 +50,5 @@ resource_database() {
   curl \
     -H "Authorization: token $GITHUB_TOKEN" \
     -L https://raw.githubusercontent.com/cslant-community/blog-storage/docker/database/postgres/cslant_blog.sql \
-    -o "$DATABASE_PATH/cslant_blog.sql"
+    -o "$DATABASE_PATH/$DATABASE_FILE_NAME.sql"
 }
