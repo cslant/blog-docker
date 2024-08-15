@@ -80,7 +80,7 @@ jobs:
             patch=0
             minor=$((minor+1))
           fi
-          if [ "$minor" -ge 10]; then
+          if [ "$minor" -ge 10 ]; then
             minor=0
             major=$((major+1))
           fi
@@ -116,5 +116,5 @@ jobs:
             ${{ env.DOCKERHUB_ID }}/${{ env.IMAGE_NAME }}:${{ steps.inc_version.outputs.new_version }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            PHP_VERSION=8.3
-            PHP_VERSION_SHORT=83
+            USER_ID=1000
+            GROUP_ID=1000
