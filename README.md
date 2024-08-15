@@ -12,6 +12,20 @@ This repo is to set up the CSlant blog with Docker.
 
 We can use this runner to update the blog for development and production.
 
+## Docker Hub
+
+[CSlant Docker Hub](https://hub.docker.com/r/cslant)
+
+In this docker repository, we have built the following images:
+
+- [cslant/blog-php](https://hub.docker.com/r/cslant/blog-php)
+- [cslant/blog-worker](https://hub.docker.com/r/cslant/blog-worker)
+- [cslant/blog-node](https://hub.docker.com/r/cslant/blog-node)
+- [cslant/blog-nginx](https://hub.docker.com/r/cslant/blog-nginx)
+- [cslant/blog-postgres](https://hub.docker.com/r/cslant/blog-postgres)
+
+---
+
 ## Prerequisites
 
 First, copy the `.env.example` file to `.env` and update the values.
@@ -147,20 +161,6 @@ pg_dump -U root -h localhost cslant_blog >> /docker-entrypoint-initdb.d/cslant_b
 ```bash
 psql -U root -h localhost cslant_blog < /docker-entrypoint-initdb.d/cslant_blog.sql
 ```
-
-## Docker Hub
-
-[CSlant Docker Hub](https://hub.docker.com/r/cslant)
-
-In this docker repository, we have the following images:
-
-- [cslant/blog-php](https://hub.docker.com/r/cslant/blog-php)
-- [cslant/blog-worker](https://hub.docker.com/r/cslant/blog-worker)
-- [cslant/blog-node](https://hub.docker.com/r/cslant/blog-node)
-- [cslant/blog-nginx](https://hub.docker.com/r/cslant/blog-nginx)
-- [cslant/blog-postgres](https://hub.docker.com/r/cslant/blog-postgres)
-
----
 
 ## License
 
