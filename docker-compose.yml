@@ -104,6 +104,7 @@ services:
   ## DATABASE SERVICES
   postgres:
     container_name: "${COMPOSE_PROJECT_NAME:-blog}-postgres"
+    image: cslant/blog-postgres
     build:
       context: postgres
       args:
