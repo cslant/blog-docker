@@ -8,8 +8,8 @@ LABEL description="Nginx image for CSlant development - Using for Blog"
 
 COPY nginx.conf /etc/nginx/
 
-RUN addgroup -g ${PHP_VERSION_SHORT} -S www-data ; \
-    adduser -u ${PHP_VERSION_SHORT} -D -S -G www-data www-data;
+RUN addgroup -g ${PHP_VERSION_SHORT} www-data && \
+    adduser -u ${PHP_VERSION_SHORT} -G www-data -D www-data
 
 WORKDIR /var/dev
 

@@ -157,6 +157,8 @@ In this docker repository, we have the following images:
 - [cslant/blog-php](https://hub.docker.com/r/cslant/blog-php)
 - [cslant/blog-worker](https://hub.docker.com/r/cslant/blog-worker)
 - [cslant/blog-node](https://hub.docker.com/r/cslant/blog-node)
+- [cslant/blog-nginx](https://hub.docker.com/r/cslant/blog-nginx)
+- [cslant/blog-postgres](https://hub.docker.com/r/cslant/blog-postgres)
 
 ---
 
