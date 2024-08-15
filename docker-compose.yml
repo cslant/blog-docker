@@ -14,6 +14,7 @@ services:
   ## WEB SERVICE
   nginx:
     container_name: "${COMPOSE_PROJECT_NAME}-nginx"
+    image: cslant/blog-nginx
     build:
       context: nginx
       args:
