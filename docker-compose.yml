@@ -15,10 +15,10 @@ services:
   nginx:
     container_name: "${COMPOSE_PROJECT_NAME}-nginx"
     image: cslant/blog-nginx
-    build:
-      context: nginx
-      args:
-        - TZ=${TZ}
+#    build:
+#      context: nginx
+#      args:
+#        - TZ=${TZ}
     volumes:
       - ./nginx/templates:/etc/nginx/templates
       - ./nginx/server/certs:/var/www/certs
@@ -52,14 +52,14 @@ services:
   php:
     container_name: "${COMPOSE_PROJECT_NAME:-blog}-php"
     image: cslant/blog-php
-    build:
-      context: php
-      args:
-        - TZ=${TZ}
-        - USER_ID=${USER_ID:-1000}
-        - GROUP_ID=${GROUP_ID:-1000}
-        - PHP_VERSION=${PHP_VERSION:-8.3}
-        - PHP_VERSION_SHORT=${PHP_VERSION_SHORT:-83}
+#    build:
+#      context: php
+#      args:
+#        - TZ=${TZ}
+#        - USER_ID=${USER_ID:-1000}
+#        - GROUP_ID=${GROUP_ID:-1000}
+#        - PHP_VERSION=${PHP_VERSION:-8.3}
+#        - PHP_VERSION_SHORT=${PHP_VERSION_SHORT:-83}
     networks:
       - cslant_blog
     volumes:
@@ -80,12 +80,12 @@ services:
   node:
     container_name: "${COMPOSE_PROJECT_NAME:-blog}-node"
     image: cslant/blog-node
-    build:
-      context: node
-      args:
-        - TZ=${TZ}
-        - USER_ID=${USER_ID:-1000}
-        - GROUP_ID=${GROUP_ID:-1000}
+#    build:
+#      context: node
+#      args:
+#        - TZ=${TZ}
+#        - USER_ID=${USER_ID:-1000}
+#        - GROUP_ID=${GROUP_ID:-1000}
     networks:
       - cslant_blog
     volumes:
@@ -105,10 +105,10 @@ services:
   postgres:
     container_name: "${COMPOSE_PROJECT_NAME:-blog}-postgres"
     image: cslant/blog-postgres
-    build:
-      context: postgres
-      args:
-        - TZ=${TZ}
+#    build:
+#      context: postgres
+#      args:
+#        - TZ=${TZ}
     networks:
       - cslant_blog
     healthcheck:
@@ -158,14 +158,14 @@ services:
   worker:
     container_name: "${COMPOSE_PROJECT_NAME}-worker"
     image: cslant/blog-worker
-    build:
-      context: worker
-      args:
-        - TZ=${TZ}
-        - USER_ID=${USER_ID}
-        - GROUP_ID=${GROUP_ID}
-        - PHP_VERSION=${PHP_VERSION:-8.3}
-        - PHP_VERSION_SHORT=${PHP_VERSION_SHORT:-83}
+#    build:
+#      context: worker
+#      args:
+#        - TZ=${TZ}
+#        - USER_ID=${USER_ID}
+#        - GROUP_ID=${GROUP_ID}
+#        - PHP_VERSION=${PHP_VERSION:-8.3}
+#        - PHP_VERSION_SHORT=${PHP_VERSION_SHORT:-83}
     networks:
       - cslant_blog
     volumes:
