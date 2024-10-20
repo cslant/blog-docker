@@ -93,7 +93,8 @@ services:
 
   fe:
     container_name: "${COMPOSE_PROJECT_NAME}-fe"
-    image: ${COMPOSE_PROJECT_NAME}-node
+#    image: ${COMPOSE_PROJECT_NAME}-node
+    image: cslant/blog-node
     networks:
       - cslant_blog
     volumes:
