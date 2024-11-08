@@ -81,6 +81,16 @@ FE_COMMAND=dev
 > 
 >       - Please get `GIT_TOKEN` from [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic).
 
+### 💻 Start in Mac with arm64
+
+To run as amd64. You need to set the default platform to `linux/amd64`:
+
+```shell
+export DOCKER_DEFAULT_PLATFORM=linux/amd64
+```
+
+### Run the runner
+
 Then, you can just run the following command to start the runner.
 
 ```bash
